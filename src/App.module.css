@@ -1,0 +1,10 @@
+.main {
+    min-height: 100dvh;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--max-w-xl);
+    margin: 0 auto;
+}
