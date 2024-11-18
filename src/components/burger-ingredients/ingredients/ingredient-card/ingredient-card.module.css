@@ -1,0 +1,10 @@
+.ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.name {
+    text-align: center;
+}

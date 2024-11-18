@@ -1,4 +1,19 @@
-export const data = [
+export interface Ingredient {
+  _id: string
+  name: string
+  type: string
+  proteins: number
+  fat: number
+  carbohydrates: number
+  calories: number
+  price: number
+  image: string
+  image_mobile: string
+  image_large: string
+  __v: number
+}
+
+export const ingredients: Ingredient[] = [
   {
     _id: '60666c42cc7b410027a1a9b1',
     name: 'Краторная булка N-200i',
@@ -210,5 +225,22 @@ export const data = [
     image_mobile: 'https://code.s3.yandex.net/react/code/bun-01-mobile.png',
     image_large: 'https://code.s3.yandex.net/react/code/bun-01-large.png',
     __v: 0,
+  },
+]
+
+interface GroupedIngredients {
+  title: string
+  items: Ingredient[]
+}
+
+export const groupedIngredients: GroupedIngredients[] = [
+  { title: 'Булки', items: ingredients.filter((item) => item.type === 'bun') },
+  {
+    title: 'Соусы',
+    items: ingredients.filter((item) => item.type === 'sauce'),
+  },
+  {
+    title: 'Начинки',
+    items: ingredients.filter((item) => item.type === 'main'),
   },
 ]
