@@ -1,8 +1,15 @@
 import styles from './ingredients.module.css'
-import { groupedIngredients } from '@/utils/data.ts'
 import { IngredientCard } from './ingredient-card'
+import type { Ingredient } from '@/types'
+import { groupIngredients } from '@/utils'
 
-export function Ingredients() {
+interface IngredientsProps {
+  ingredients: Ingredient[]
+}
+
+export function Ingredients({ ingredients }: IngredientsProps) {
+  const groupedIngredients = groupIngredients(ingredients)
+
   return (
     <article className={`${styles.scroll} mt-10`}>
       {groupedIngredients.map(({ title, items }, index) => (

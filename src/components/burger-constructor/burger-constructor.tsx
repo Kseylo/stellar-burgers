@@ -2,12 +2,16 @@ import {
   Button,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredients } from '@/utils/data.ts'
 import { Price } from '@/components/price'
 import styles from './burger-constructor.module.css'
 import { ConstructorItem } from './constructor-item'
+import type { Ingredient } from '@/types'
 
-export function BurgerConstructor() {
+interface BurgerConstructorProps {
+  ingredients: Ingredient[]
+}
+
+export function BurgerConstructor({ ingredients }: BurgerConstructorProps) {
   const bun = ingredients[0]
   const toppings = ingredients.filter(
     (ingredient) => ingredient.type === 'main' || ingredient.type === 'sauce',
