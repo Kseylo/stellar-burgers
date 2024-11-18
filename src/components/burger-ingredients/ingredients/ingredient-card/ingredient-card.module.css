@@ -5,10 +5,6 @@
     position: relative;
 }
 
-.price {
-    display: flex;
-}
-
 .name {
     text-align: center;
 }

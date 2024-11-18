@@ -1,9 +1,6 @@
 import { useState } from 'react'
-import {
-  IngredientsTabs,
-  TabItem,
-} from '@/components/burger-ingredients/ingredients-tabs'
-import { Ingredients } from '@/components/burger-ingredients/ingredients'
+import { IngredientsTabs, TabItem } from './ingredients-tabs'
+import { Ingredients } from './ingredients'
 
 const tabs: TabItem[] = [
   {

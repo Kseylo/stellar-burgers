@@ -1,6 +1,6 @@
 import styles from './ingredients.module.css'
 import { groupedIngredients } from '@/utils/data.ts'
-import { IngredientCard } from '@/components/burger-ingredients/ingredients/ingredient-card'
+import { IngredientCard } from './ingredient-card'
 
 export function Ingredients() {
   return (
