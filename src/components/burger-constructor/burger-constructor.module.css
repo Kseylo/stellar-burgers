@@ -1,3 +1,10 @@
-.title {
-    margin-top: 2.5rem;
+.scroll {
+    height: calc(100dvh - 526px);
+    overflow-y: auto;
+}
+
+.totalContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
