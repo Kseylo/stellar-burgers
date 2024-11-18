@@ -1,0 +1,14 @@
+.ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.price {
+    display: flex;
+}
+
+.name {
+    text-align: center;
+}

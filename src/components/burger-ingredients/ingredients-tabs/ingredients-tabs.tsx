@@ -16,7 +16,7 @@ export function IngredientsTabs(props: IngredientsTabsProps) {
   const { tabs, currentTab, onTabClick } = props
 
   return (
-    <div className={`${styles.container} mt-5`}>
+    <div className={`${styles.tabs} mt-5`}>
       {tabs.map((tab) => (
         <Tab
           key={tab.value}
