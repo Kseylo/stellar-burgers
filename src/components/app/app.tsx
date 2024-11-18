@@ -2,9 +2,9 @@ import { AppHeader } from '@/components/app-header'
 import { BurgerConstructor } from '@/components/burger-constructor'
 import { BurgerIngredients } from '@/components/burger-ingredients'
 
-import styles from './App.module.css'
+import styles from './app.module.css'
 
-function App() {
+export function App() {
   return (
     <main className={styles.main}>
       <AppHeader />
@@ -15,5 +15,3 @@ function App() {
     </main>
   )
 }
-
-export default App

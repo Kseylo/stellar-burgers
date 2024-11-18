@@ -5,7 +5,7 @@ import {
 import { ingredients } from '@/utils/data.ts'
 import { Price } from '@/components/price'
 import styles from './burger-constructor.module.css'
-import { ConstructorItem } from '@/components/burger-constructor/constructor-item'
+import { ConstructorItem } from './constructor-item'
 
 export function BurgerConstructor() {
   const bun = ingredients[0]
@@ -17,7 +17,7 @@ export function BurgerConstructor() {
     <section className={'mt-25'}>
       <ConstructorElement
         type="top"
-        text={bun.name}
+        text={`${bun.name} (верх)`}
         price={bun.price}
         thumbnail={bun.image}
         isLocked
@@ -32,7 +32,7 @@ export function BurgerConstructor() {
 
       <ConstructorElement
         type="bottom"
-        text={bun.name}
+        text={`${bun.name} (низ)`}
         price={bun.price}
         thumbnail={bun.image}
         isLocked
