@@ -6,12 +6,16 @@ import { Price } from '@/components/price'
 import styles from './burger-constructor.module.css'
 import { ConstructorItem } from './constructor-item'
 import type { Ingredient } from '@/types'
+import { OrderDetails } from '@/components/order-details'
+import { useState } from 'react'
 
 interface BurgerConstructorProps {
   ingredients: Ingredient[]
 }
 
 export function BurgerConstructor({ ingredients }: BurgerConstructorProps) {
+  const [open, setOpen] = useState(false)
+
   const bun = ingredients[0]
   const toppings = ingredients.filter(
     (ingredient) => ingredient.type === 'main' || ingredient.type === 'sauce',
@@ -45,10 +49,17 @@ export function BurgerConstructor({ ingredients }: BurgerConstructorProps) {
 
       <div className={`${styles.totalContainer} mt-10`}>
         <Price price={610} size={'medium'} className={'mr-10'} />
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => setOpen(true)}
+        >
           Оформить заказ
         </Button>
       </div>
+
+      <OrderDetails open={open} onClose={() => setOpen(false)} />
     </section>
   )
 }
