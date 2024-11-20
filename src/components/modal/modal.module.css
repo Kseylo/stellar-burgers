@@ -1,0 +1,27 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    background: var(--background);
+    border-radius: var(--common-border-radius-s);
+    width: 720px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: auto;
+}
