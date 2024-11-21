@@ -1,4 +1,4 @@
-import { Ingredient } from '@/utils/data.ts'
+import { Ingredient } from '@/types'
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api'
 

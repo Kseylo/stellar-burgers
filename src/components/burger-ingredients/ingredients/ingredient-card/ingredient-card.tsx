@@ -1,7 +1,7 @@
 import styles from './ingredient-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import type { Ingredient } from '@/utils/data.ts'
 import { Price } from '@/components/price'
+import { Ingredient } from '@/types'
 
 export function IngredientCard({ ingredient }: { ingredient: Ingredient }) {
   return (
