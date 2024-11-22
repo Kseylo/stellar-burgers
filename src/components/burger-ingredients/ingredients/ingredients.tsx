@@ -4,6 +4,8 @@ import type { Ingredient } from '@/types'
 import { groupIngredients } from '@/utils'
 import { IngredientDetails } from '@/components/ingredient-details'
 import { useState } from 'react'
+import { Modal } from '@/components/modal'
+import { useModal } from '@/hooks/use-modal'
 
 interface IngredientsProps {
   ingredients: Ingredient[]
@@ -11,13 +13,13 @@ interface IngredientsProps {
 
 export function Ingredients({ ingredients }: IngredientsProps) {
   const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>()
-  const [open, setOpen] = useState(false)
+  const { open, handleOpen, handleClose } = useModal()
 
   const groupedIngredients = groupIngredients(ingredients)
 
   const handleClick = (ingredient: Ingredient) => {
     setSelectedIngredient(ingredient)
-    setOpen(true)
+    handleOpen()
   }
 
   return (
@@ -36,13 +38,10 @@ export function Ingredients({ ingredients }: IngredientsProps) {
           </div>
         </div>
       ))}
-      {selectedIngredient && (
-        <IngredientDetails
-          ingredient={selectedIngredient}
-          open={open}
-          onClose={() => setOpen(false)}
-          title={'Детали ингредиента'}
-        />
+      {selectedIngredient && open && (
+        <Modal onClose={handleClose} title={'Детали ингредиента'}>
+          <IngredientDetails ingredient={selectedIngredient} />
+        </Modal>
       )}
     </article>
   )

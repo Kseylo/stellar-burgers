@@ -8,14 +8,7 @@
 
 
 body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
   overflow: hidden;
-}
-
-img, picture, video, canvas, svg {
-  display: block;
-  max-width: 100%;
 }
 
 input, button, textarea, select {

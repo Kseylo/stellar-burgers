@@ -30,14 +30,16 @@ export function App() {
   }, [])
 
   return (
-    <main className={styles.main}>
+    <>
       <AppHeader />
-      {!isLoading && !error && (
-        <div className={`${styles.container}`}>
-          <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor ingredients={ingredients} />
-        </div>
-      )}
-    </main>
+      <main className={styles.main}>
+        {!isLoading && !error && (
+          <div className={`${styles.container}`}>
+            <BurgerIngredients ingredients={ingredients} />
+            <BurgerConstructor ingredients={ingredients} />
+          </div>
+        )}
+      </main>
+    </>
   )
 }

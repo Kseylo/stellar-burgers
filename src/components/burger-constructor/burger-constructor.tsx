@@ -7,14 +7,15 @@ import styles from './burger-constructor.module.css'
 import { ConstructorItem } from './constructor-item'
 import type { Ingredient } from '@/types'
 import { OrderDetails } from '@/components/order-details'
-import { useState } from 'react'
+import { Modal } from '@/components/modal'
+import { useModal } from '@/hooks/use-modal'
 
 interface BurgerConstructorProps {
   ingredients: Ingredient[]
 }
 
 export function BurgerConstructor({ ingredients }: BurgerConstructorProps) {
-  const [open, setOpen] = useState(false)
+  const { open, handleOpen, handleClose } = useModal()
 
   const bun = ingredients[0]
   const toppings = ingredients.filter(
@@ -53,13 +54,16 @@ export function BurgerConstructor({ ingredients }: BurgerConstructorProps) {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
         >
           Оформить заказ
         </Button>
       </div>
-
-      <OrderDetails open={open} onClose={() => setOpen(false)} />
+      {open && (
+        <Modal onClose={handleClose}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   )
 }
