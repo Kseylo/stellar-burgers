@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { IngredientsTabs, TabItem } from './ingredients-tabs'
 import { Ingredients } from './ingredients'
+import type { Ingredient } from '@/types'
 
 const tabs: TabItem[] = [
   {
@@ -17,7 +18,11 @@ const tabs: TabItem[] = [
   },
 ]
 
-export function BurgerIngredients() {
+interface BurgerIngredientsProps {
+  ingredients: Ingredient[]
+}
+
+export function BurgerIngredients({ ingredients }: BurgerIngredientsProps) {
   const [currentTab, setCurrentTab] = useState(tabs[0])
 
   return (
@@ -28,7 +33,7 @@ export function BurgerIngredients() {
         currentTab={currentTab}
         onTabClick={setCurrentTab}
       />
-      <Ingredients />
+      <Ingredients ingredients={ingredients} />
     </section>
   )
 }

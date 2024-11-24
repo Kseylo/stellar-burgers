@@ -2,12 +2,21 @@ import {
   Button,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredients } from '@/utils/data.ts'
 import { Price } from '@/components/price'
 import styles from './burger-constructor.module.css'
 import { ConstructorItem } from './constructor-item'
+import type { Ingredient } from '@/types'
+import { OrderDetails } from '@/components/order-details'
+import { Modal } from '@/components/modal'
+import { useModal } from '@/hooks/use-modal'
 
-export function BurgerConstructor() {
+interface BurgerConstructorProps {
+  ingredients: Ingredient[]
+}
+
+export function BurgerConstructor({ ingredients }: BurgerConstructorProps) {
+  const { open, handleOpen, handleClose } = useModal()
+
   const bun = ingredients[0]
   const toppings = ingredients.filter(
     (ingredient) => ingredient.type === 'main' || ingredient.type === 'sauce',
@@ -41,10 +50,20 @@ export function BurgerConstructor() {
 
       <div className={`${styles.totalContainer} mt-10`}>
         <Price price={610} size={'medium'} className={'mr-10'} />
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={handleOpen}
+        >
           Оформить заказ
         </Button>
       </div>
+      {open && (
+        <Modal onClose={handleClose}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   )
 }

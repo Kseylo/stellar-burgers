@@ -2,8 +2,8 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import type { Ingredient } from '@/utils/data.ts'
 import styles from './constructor-item.module.css'
+import type { Ingredient } from '@/types'
 
 interface ConstructorItemProps {
   ingredient: Ingredient

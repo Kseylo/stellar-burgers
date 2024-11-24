@@ -1,11 +1,16 @@
 import styles from './ingredient-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import type { Ingredient } from '@/utils/data.ts'
 import { Price } from '@/components/price'
+import { Ingredient } from '@/types'
 
-export function IngredientCard({ ingredient }: { ingredient: Ingredient }) {
+interface IngredientCardProps {
+  ingredient: Ingredient
+  onClick: (ingredient: Ingredient) => void
+}
+
+export function IngredientCard({ ingredient, onClick }: IngredientCardProps) {
   return (
-    <article className={styles.ingredient}>
+    <article className={styles.ingredient} onClick={() => onClick(ingredient)}>
       <img
         src={ingredient.image}
         alt={ingredient.name}

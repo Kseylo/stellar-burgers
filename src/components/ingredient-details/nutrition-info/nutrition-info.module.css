@@ -1,0 +1,9 @@
+.nutrition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nutrition:last-child {
+    margin-right: 0;
+}
