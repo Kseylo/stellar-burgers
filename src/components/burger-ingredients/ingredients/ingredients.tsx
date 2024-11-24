@@ -3,22 +3,24 @@ import { IngredientCard } from './ingredient-card'
 import type { Ingredient } from '@/types'
 import { groupIngredients } from '@/utils'
 import { IngredientDetails } from '@/components/ingredient-details'
-import { useState } from 'react'
 import { Modal } from '@/components/modal'
 import { useModal } from '@/hooks/use-modal'
+import { useAppDispatch } from '@/store'
+import { setIngredient } from '@/services'
 
 interface IngredientsProps {
   ingredients: Ingredient[]
 }
 
 export function Ingredients({ ingredients }: IngredientsProps) {
-  const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>()
   const { open, handleOpen, handleClose } = useModal()
+
+  const dispatch = useAppDispatch()
 
   const groupedIngredients = groupIngredients(ingredients)
 
   const handleClick = (ingredient: Ingredient) => {
-    setSelectedIngredient(ingredient)
+    dispatch(setIngredient(ingredient))
     handleOpen()
   }
 
@@ -38,9 +40,9 @@ export function Ingredients({ ingredients }: IngredientsProps) {
           </div>
         </div>
       ))}
-      {selectedIngredient && open && (
+      {open && (
         <Modal onClose={handleClose} title={'Детали ингредиента'}>
-          <IngredientDetails ingredient={selectedIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
     </article>
