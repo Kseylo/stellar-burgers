@@ -14,6 +14,6 @@ export interface Ingredient {
 }
 
 export interface GroupedIngredients {
-  title: string
-  items: Ingredient[]
+  type: string
+  ingredients: Ingredient[]
 }
