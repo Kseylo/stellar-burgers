@@ -17,3 +17,8 @@ export interface GroupedIngredients {
   type: string
   ingredients: Ingredient[]
 }
+
+export interface TabItem {
+  type: string
+  label: string
+}

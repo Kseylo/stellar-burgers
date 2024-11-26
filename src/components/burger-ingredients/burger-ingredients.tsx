@@ -1,29 +1,13 @@
 import { useState } from 'react'
-import { IngredientsTabs, TabItem } from './ingredients-tabs'
+import { IngredientsTabs } from './ingredients-tabs'
+import { useGetIngredientsQuery } from '@/api'
 import { Ingredients } from './ingredients'
-import type { Ingredient } from '@/types'
+import { tabs } from '@/config'
 
-const tabs: TabItem[] = [
-  {
-    value: 'buns',
-    label: 'Булки',
-  },
-  {
-    value: 'sauces',
-    label: 'Соусы',
-  },
-  {
-    value: 'toppings',
-    label: 'Начинки',
-  },
-]
-
-interface BurgerIngredientsProps {
-  ingredients: Ingredient[]
-}
-
-export function BurgerIngredients({ ingredients }: BurgerIngredientsProps) {
+export function BurgerIngredients() {
   const [currentTab, setCurrentTab] = useState(tabs[0])
+
+  const { data, isLoading, isError } = useGetIngredientsQuery()
 
   return (
     <section className={'mt-10'}>
@@ -33,7 +17,9 @@ export function BurgerIngredients({ ingredients }: BurgerIngredientsProps) {
         currentTab={currentTab}
         onTabClick={setCurrentTab}
       />
-      <Ingredients ingredients={ingredients} />
+      {!isLoading && !isError && data && (
+        <Ingredients groupedIngredients={data} />
+      )}
     </section>
   )
 }
