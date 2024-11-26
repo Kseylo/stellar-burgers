@@ -1,15 +1,15 @@
 import { BASE_URL } from '@/api'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { GroupedIngredients } from '@/types'
-import { transformIngredients } from './transform-ingredients'
+import { Ingredient } from '@/types'
 
 export const ingredientsApi = createApi({
   reducerPath: 'ingredientsApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getIngredients: builder.query<GroupedIngredients[], void>({
+    getIngredients: builder.query<Ingredient[], void>({
       query: () => 'ingredients',
-      transformResponse: transformIngredients,
+      transformResponse: (response: { success: true; data: Ingredient[] }) =>
+        response.data,
     }),
   }),
 })

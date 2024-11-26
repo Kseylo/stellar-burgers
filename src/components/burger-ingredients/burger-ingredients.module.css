@@ -1,0 +1,6 @@
+.scroll {
+    height: calc(100dvh - 324px);
+    overflow-y: auto;
+}
+
+
