@@ -1,0 +1,11 @@
+.constructor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ingredients {
+    height: 94%;
+    margin-top: calc(var(--offset-base-size) * 4);
+    margin-left: calc(var(--offset-base-size) * 8);
+}
