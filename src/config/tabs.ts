@@ -1,16 +1,17 @@
 import { TabItem } from '@/types'
+import { IngredientType } from './ingredients'
 
 export const tabs: TabItem[] = [
   {
-    type: 'bun',
+    type: IngredientType.BUN,
     label: 'Булки',
   },
   {
-    type: 'sauce',
+    type: IngredientType.SAUCE,
     label: 'Соусы',
   },
   {
-    type: 'main',
+    type: IngredientType.MAIN,
     label: 'Начинки',
   },
 ]
