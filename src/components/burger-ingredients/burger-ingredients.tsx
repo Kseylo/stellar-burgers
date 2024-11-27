@@ -8,6 +8,8 @@ import { useModal } from '@/hooks/use-modal'
 import styles from './burger-ingredients.module.css'
 import { IngredientSection } from './ingredient-section'
 import { IntersectionOptions, useInView } from 'react-intersection-observer'
+import { useAppDispatch } from '@/store'
+import { clearIngredient } from '@/services/ingredient'
 
 const intersectionOptions: IntersectionOptions = {
   threshold: 0,
@@ -21,6 +23,8 @@ export function BurgerIngredients({
   const { open, handleOpen, handleClose } = useModal()
 
   const [currentTab, setCurrentTab] = useState(tabs[0])
+
+  const dispatch = useAppDispatch()
 
   const [bunsRef, inViewBuns, bunEntry] = useInView(intersectionOptions)
   const [saucesRef, inViewSauces, saucesEntry] = useInView(intersectionOptions)
@@ -104,7 +108,13 @@ export function BurgerIngredients({
       </article>
 
       {open && (
-        <Modal onClose={handleClose} title={'Детали ингредиента'}>
+        <Modal
+          onClose={() => {
+            dispatch(clearIngredient())
+            handleClose()
+          }}
+          title={'Детали ингредиента'}
+        >
           <IngredientDetails />
         </Modal>
       )}

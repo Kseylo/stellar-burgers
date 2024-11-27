@@ -7,10 +7,11 @@ import type { Ingredient } from '@/types'
 
 interface ConstructorItemProps {
   ingredient: Ingredient
+  handleClose?: () => void
 }
 
 export function ConstructorItem(props: ConstructorItemProps) {
-  const { ingredient } = props
+  const { ingredient, ...rest } = props
   return (
     <div className={styles.wrapper}>
       <DragIcon type={'primary'} />
@@ -19,6 +20,7 @@ export function ConstructorItem(props: ConstructorItemProps) {
         price={ingredient.price}
         thumbnail={ingredient.image}
         extraClass={'ml-2 mt-4'}
+        {...rest}
       />
     </div>
   )

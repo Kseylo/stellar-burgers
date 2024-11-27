@@ -2,7 +2,7 @@ import styles from './ingredient-section.module.css'
 import { IngredientCard } from './ingredient-card'
 import { Ingredient } from '@/types'
 import { useAppDispatch } from '@/store'
-import { setIngredient } from '@/services'
+import { setIngredient } from '@/services/ingredient'
 import { forwardRef } from 'react'
 
 interface IngredientSectionProps {

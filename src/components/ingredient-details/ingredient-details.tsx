@@ -1,7 +1,7 @@
 import { NutritionInfo } from './nutrition-info'
 import styles from './ingredient-details.module.css'
 import { useAppSelector } from '@/store'
-import { selectIngredient } from '@/services'
+import { selectIngredient } from '@/services/ingredient'
 
 export function IngredientDetails() {
   const ingredient = useAppSelector(selectIngredient)!
