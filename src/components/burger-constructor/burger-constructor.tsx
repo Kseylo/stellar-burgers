@@ -20,6 +20,8 @@ import {
 } from '@/services/burger'
 import { ConstructorSkeleton } from '@/components/constructor-skeleton'
 import { useMemo } from 'react'
+import { useCreateOrderMutation } from '@/api/orders'
+import { clearOrder, setOrder } from '@/services/order'
 
 export function BurgerConstructor() {
   const { open, handleOpen, handleClose } = useModal()
@@ -27,6 +29,8 @@ export function BurgerConstructor() {
   const { bun, ingredients } = useAppSelector(selectBurger)
 
   const dispatch = useAppDispatch()
+
+  const [createOrder, { isLoading }] = useCreateOrderMutation()
 
   const [, dropRef] = useDrop({
     accept: 'ingredient',
@@ -45,6 +49,23 @@ export function BurgerConstructor() {
     }, 0)
     return ingredientsPrice + (bun ? bun.price * 2 : 0)
   }, [bun, ingredients])
+
+  const onSubmit = async () => {
+    try {
+      const {
+        name,
+        order: { number },
+      } = await createOrder({
+        ingredients: ingredients
+          .map((ing) => ing._id)
+          .concat(bun!._id, bun!._id),
+      }).unwrap()
+      dispatch(setOrder({ name, number }))
+      handleOpen()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <section ref={dropRef} className={'mt-25 pl-4'}>
@@ -105,14 +126,19 @@ export function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={handleOpen}
-          disabled={!bun || !ingredients.length}
+          onClick={onSubmit}
+          disabled={!bun || !ingredients.length || isLoading}
         >
           Оформить заказ
         </Button>
       </div>
       {open && (
-        <Modal onClose={handleClose}>
+        <Modal
+          onClose={() => {
+            dispatch(clearOrder())
+            handleClose()
+          }}
+        >
           <OrderDetails />
         </Modal>
       )}
