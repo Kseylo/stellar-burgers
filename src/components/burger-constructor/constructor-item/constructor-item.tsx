@@ -3,7 +3,7 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './constructor-item.module.css'
-import type { Ingredient } from '@/types'
+import type { IngredientWithKey } from '@/types'
 import { useDrag, useDrop } from 'react-dnd'
 import { Identifier, XYCoord } from 'dnd-core'
 import { useRef } from 'react'
@@ -11,7 +11,7 @@ import { useAppDispatch } from '@/store'
 import { removeIngredient, reorderIngredient } from '@/services/burger'
 
 interface ConstructorItemProps {
-  ingredient: Ingredient
+  ingredient: IngredientWithKey
   index: number
 }
 

@@ -1,9 +1,10 @@
-import { Ingredient } from '@/types'
+import { Ingredient, IngredientWithKey } from '@/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid'
 
 interface BurgerState {
   bun: Ingredient | null
-  ingredients: Ingredient[]
+  ingredients: IngredientWithKey[]
 }
 
 const initialState: BurgerState = {
@@ -19,7 +20,7 @@ export const burgerSlice = createSlice({
       state.bun = action.payload
     },
     addIngredient: (state, action: PayloadAction<Ingredient>) => {
-      state.ingredients.push(action.payload)
+      state.ingredients.push({ ...action.payload, key: uuidv4() })
     },
     removeIngredient: (state, action: PayloadAction<{ index: number }>) => {
       state.ingredients = state.ingredients.filter(

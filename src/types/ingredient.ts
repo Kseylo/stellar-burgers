@@ -13,6 +13,10 @@ export interface Ingredient {
   __v: number
 }
 
+export interface IngredientWithKey extends Ingredient {
+  key: string
+}
+
 export interface TabItem {
   type: string
   label: string

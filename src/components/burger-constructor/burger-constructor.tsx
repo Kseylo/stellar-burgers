@@ -83,7 +83,7 @@ export function BurgerConstructor() {
         {ingredients && ingredients.length > 0 ? (
           ingredients.map((ingredient, index) => (
             <ConstructorItem
-              key={ingredient._id + index}
+              key={ingredient.key}
               index={index}
               ingredient={ingredient}
             />
