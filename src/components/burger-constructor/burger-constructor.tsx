@@ -12,12 +12,7 @@ import { useDrop } from 'react-dnd'
 import { Ingredient } from '@/types'
 import { IngredientType } from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store'
-import {
-  selectBurger,
-  addIngredient,
-  removeIngredient,
-  setBun,
-} from '@/services/burger'
+import { selectBurger, addIngredient, setBun } from '@/services/burger'
 import { ConstructorSkeleton } from '@/components/constructor-skeleton'
 import { useMemo } from 'react'
 import { useCreateOrderMutation } from '@/api/orders'
@@ -32,7 +27,7 @@ export function BurgerConstructor() {
 
   const [createOrder, { isLoading }] = useCreateOrderMutation()
 
-  const [, dropRef] = useDrop({
+  const [, dropRefIngredients] = useDrop({
     accept: 'ingredient',
     drop: (item: Ingredient) => {
       if (item.type === IngredientType.BUN) {
@@ -56,9 +51,7 @@ export function BurgerConstructor() {
         name,
         order: { number },
       } = await createOrder({
-        ingredients: ingredients
-          .map((ing) => ing._id)
-          .concat(bun!._id, bun!._id),
+        ingredients: [bun!._id, ...ingredients.map((ing) => ing._id), bun!._id],
       }).unwrap()
       dispatch(setOrder({ name, number }))
       handleOpen()
@@ -68,7 +61,7 @@ export function BurgerConstructor() {
   }
 
   return (
-    <section ref={dropRef} className={'mt-25 pl-4'}>
+    <section ref={dropRefIngredients} className={'mt-25 pl-4'}>
       <div className={'ml-8 pr-4'}>
         {bun ? (
           <ConstructorElement
@@ -91,8 +84,8 @@ export function BurgerConstructor() {
           ingredients.map((ingredient, index) => (
             <ConstructorItem
               key={ingredient._id + index}
+              index={index}
               ingredient={ingredient}
-              handleClose={() => dispatch(removeIngredient({ index }))}
             />
           ))
         ) : (

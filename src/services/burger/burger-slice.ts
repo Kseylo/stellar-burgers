@@ -26,7 +26,16 @@ export const burgerSlice = createSlice({
         (_, index) => index !== action.payload.index,
       )
     },
+    reorderIngredient: (
+      state,
+      action: PayloadAction<{ from: number; to: number }>,
+    ) => {
+      const { from, to } = action.payload
+      const ingredient = state.ingredients.splice(from, 1)[0]
+      state.ingredients.splice(to, 0, ingredient)
+    },
   },
 })
 
-export const { setBun, addIngredient, removeIngredient } = burgerSlice.actions
+export const { setBun, addIngredient, removeIngredient, reorderIngredient } =
+  burgerSlice.actions
