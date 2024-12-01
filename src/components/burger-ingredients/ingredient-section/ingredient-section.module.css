@@ -1,6 +1,5 @@
-.scroll {
-    height: calc(100dvh - 324px);
-    overflow-y: auto;
+.section:not(:first-child) {
+    margin-top: calc(var(--offset-base-size) * 10);
 }
 
 .ingredients {
@@ -9,4 +8,3 @@
     grid-column-gap: calc(var(--offset-base-size) * 6);
     grid-row-gap: calc(var(--offset-base-size) * 8);
 }
-
