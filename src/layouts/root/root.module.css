@@ -1,0 +1,8 @@
+.main {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--max-w-xl);
+    margin: 0 auto;
+}

@@ -1,9 +1,3 @@
-.main {
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-}
-
 .container {
     width: 100%;
     max-width: var(--max-w-xl);
