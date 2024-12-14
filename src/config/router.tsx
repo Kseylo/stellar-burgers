@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouteObject } from 'react-router'
 import { RootLayout } from '@/layouts'
-import { HomePage } from '@/pages'
+import { HomePage, LoginPage } from '@/pages'
 
 export enum ROUTES {
   HOME = '/',
@@ -18,7 +18,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: ROUTES.LOGIN,
-        element: <div>Login</div>,
+        element: <LoginPage />,
       },
     ],
   },
