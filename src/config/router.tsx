@@ -1,10 +1,12 @@
 import { createBrowserRouter, RouteObject } from 'react-router'
 import { RootLayout } from '@/layouts'
-import { HomePage, LoginPage } from '@/pages'
+import { HomePage, LoginPage, RegisterPage } from '@/pages'
+import { AuthLayout } from '@/layouts/auth'
 
 export enum ROUTES {
   HOME = '/',
   LOGIN = '/login',
+  REGISTER = '/register',
 }
 
 export const routes: RouteObject[] = [
@@ -17,8 +19,17 @@ export const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: ROUTES.LOGIN,
-        element: <LoginPage />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: ROUTES.LOGIN,
+            element: <LoginPage />,
+          },
+          {
+            path: ROUTES.REGISTER,
+            element: <RegisterPage />,
+          },
+        ],
       },
     ],
   },
