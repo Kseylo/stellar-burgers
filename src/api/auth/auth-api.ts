@@ -8,14 +8,16 @@ import {
 } from '@reduxjs/toolkit/query/react'
 import { getCookie, setCookie } from '@/utils'
 
+interface User {
+  email: string
+  name: string
+}
+
 interface ApiResponse {
   success: boolean
   accessToken: string
   refreshToken: string
-  user: {
-    email: string
-    name: string
-  }
+  user: User
 }
 
 const baseQuery = fetchBaseQuery({
@@ -98,8 +100,21 @@ export const authApi = createApi({
     >({
       query: () => 'user',
     }),
+    logout: builder.mutation<{ success: boolean; message: string }, void>({
+      query: () => {
+        return {
+          url: 'logout',
+          method: 'POST',
+          body: { token: localStorage.getItem('refreshToken') },
+        }
+      },
+    }),
   }),
 })
 
-export const { useRegisterMutation, useLoginMutation, useGetUserQuery } =
-  authApi
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useGetUserQuery,
+  useLogoutMutation,
+} = authApi
