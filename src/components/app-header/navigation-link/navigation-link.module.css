@@ -1,4 +1,9 @@
 .item {
     list-style: none;
+}
+
+.link {
     display: flex;
+    text-decoration: none;
+    color: inherit;
 }
