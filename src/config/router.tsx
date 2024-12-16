@@ -1,13 +1,19 @@
 import { createBrowserRouter, RouteObject } from 'react-router'
-import { RootLayout } from '@/layouts'
-import { ForgotPasswordPage, HomePage, LoginPage, RegisterPage } from '@/pages'
-import { AuthLayout } from '@/layouts/auth'
+import { RootLayout, AuthLayout, ProtectedLayout } from '@/layouts'
+import {
+  ForgotPasswordPage,
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  ProfilePage,
+} from '@/pages'
 
 export enum ROUTES {
   HOME = '/',
   LOGIN = '/login',
   REGISTER = '/register',
   FORGOT_PASSWORD = '/forgot-password',
+  PROFILE = '/profile',
 }
 
 export const routes: RouteObject[] = [
@@ -33,6 +39,15 @@ export const routes: RouteObject[] = [
           {
             path: ROUTES.FORGOT_PASSWORD,
             element: <ForgotPasswordPage />,
+          },
+        ],
+      },
+      {
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: ROUTES.PROFILE,
+            element: <ProfilePage />,
           },
         ],
       },

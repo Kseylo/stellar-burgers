@@ -3,6 +3,7 @@ import { Navigate, Outlet } from 'react-router'
 import { useGetUserQuery } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { getCookie } from '@/utils'
+import { ROUTES } from '@/config/router.tsx'
 
 export function AuthLayout() {
   const accessToken = getCookie('accessToken')
@@ -18,7 +19,7 @@ export function AuthLayout() {
       </div>
     )
 
-  if (currentData) return <Navigate to={'/'} />
+  if (currentData) return <Navigate to={ROUTES.HOME} />
 
   return (
     <div className={styles.container}>

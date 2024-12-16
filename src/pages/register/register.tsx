@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { useRegisterMutation } from '@/api/auth'
 import { useNavigate } from 'react-router'
 import { setCookie } from '@/utils'
+import { ROUTES } from '@/config/router.tsx'
 
 export function RegisterPage() {
   const [form, setForm] = useState({
@@ -30,7 +31,7 @@ export function RegisterPage() {
       const { accessToken, refreshToken } = await register(form).unwrap()
       setCookie('accessToken', accessToken)
       localStorage.setItem('refreshToken', refreshToken)
-      navigate('/')
+      navigate(ROUTES.HOME)
     } catch (e) {
       console.error(e)
     }
@@ -73,7 +74,7 @@ export function RegisterPage() {
       <FormActions>
         <FormAction
           text={'Уже зарегистрированы?'}
-          link={'/login'}
+          link={ROUTES.LOGIN}
           buttonText={'Войти'}
         />
       </FormActions>

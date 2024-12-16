@@ -3,6 +3,7 @@ import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ROUTES } from '@/config/router.tsx'
 
 export function ForgotPasswordPage() {
   return (
@@ -23,7 +24,7 @@ export function ForgotPasswordPage() {
       <FormActions>
         <FormAction
           text={'Вспомнили пароль?'}
-          link={'/login'}
+          link={ROUTES.LOGIN}
           buttonText={'Войти'}
         />
       </FormActions>

@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { useLoginMutation } from '@/api/auth'
 import { setCookie } from '@/utils'
 import { useNavigate } from 'react-router'
+import { ROUTES } from '@/config/router.tsx'
 
 export function LoginPage() {
   const [form, setForm] = useState({
@@ -29,7 +30,7 @@ export function LoginPage() {
       const { accessToken, refreshToken } = await login(form).unwrap()
       setCookie('accessToken', accessToken)
       localStorage.setItem('refreshToken', refreshToken)
-      navigate('/')
+      navigate(ROUTES.HOME)
     } catch (e) {
       console.error(e)
     }
@@ -65,12 +66,12 @@ export function LoginPage() {
       <FormActions>
         <FormAction
           text={'Вы - новый пользователь?'}
-          link={'/register'}
+          link={ROUTES.REGISTER}
           buttonText={'Зарегистрироваться'}
         />
         <FormAction
           text={'Забыли пароль?'}
-          link={'/forgot-password'}
+          link={ROUTES.FORGOT_PASSWORD}
           buttonText={'Восстановить пароль'}
         />
       </FormActions>
