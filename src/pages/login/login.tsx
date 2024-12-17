@@ -47,11 +47,13 @@ export function LoginPage() {
         placeholder={'E-mail'}
         type={'email'}
         name={'email'}
+        autoComplete={'email'}
       />
       <PasswordInput
         value={form.password}
         onChange={onChange}
         name={'password'}
+        autoComplete={'current-password'}
       />
 
       <Button

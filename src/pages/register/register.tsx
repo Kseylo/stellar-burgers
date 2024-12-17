@@ -47,6 +47,7 @@ export function RegisterPage() {
         placeholder={'Имя'}
         type={'text'}
         name={'name'}
+        autoComplete={'name'}
       />
       {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
       <Input
@@ -55,11 +56,13 @@ export function RegisterPage() {
         placeholder={'E-mail'}
         type={'email'}
         name={'email'}
+        autoComplete={'email'}
       />
       <PasswordInput
         value={form.password}
         onChange={onChange}
         name={'password'}
+        autoComplete={'new-password'}
       />
 
       <Button

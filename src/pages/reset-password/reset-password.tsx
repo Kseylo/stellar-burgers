@@ -37,6 +37,8 @@ export function ResetPasswordPage() {
         value={form.password}
         onChange={onChange}
         placeholder={'Введите новый пароль'}
+        autoComplete={'new-password'}
+        name={'password'}
       />
       {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
       <Input
@@ -44,6 +46,7 @@ export function ResetPasswordPage() {
         onChange={onChange}
         placeholder={'Введите код из письма'}
         type={'text'}
+        name={'token'}
       />
 
       <Button
