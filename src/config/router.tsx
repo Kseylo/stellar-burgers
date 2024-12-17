@@ -6,6 +6,7 @@ import {
   LoginPage,
   RegisterPage,
   ProfilePage,
+  ResetPasswordPage,
 } from '@/pages'
 
 export enum ROUTES {
@@ -14,6 +15,7 @@ export enum ROUTES {
   REGISTER = '/register',
   FORGOT_PASSWORD = '/forgot-password',
   PROFILE = '/profile',
+  RESET_PASSWORD = '/reset-password',
 }
 
 export const routes: RouteObject[] = [
@@ -39,6 +41,10 @@ export const routes: RouteObject[] = [
           {
             path: ROUTES.FORGOT_PASSWORD,
             element: <ForgotPasswordPage />,
+          },
+          {
+            path: ROUTES.RESET_PASSWORD,
+            element: <ResetPasswordPage />,
           },
         ],
       },
