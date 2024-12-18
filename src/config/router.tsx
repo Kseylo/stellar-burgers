@@ -7,6 +7,7 @@ import {
   RegisterPage,
   ProfilePage,
   ResetPasswordPage,
+  NotFoundPage,
 } from '@/pages'
 
 export enum ROUTES {
@@ -15,7 +16,9 @@ export enum ROUTES {
   REGISTER = '/register',
   FORGOT_PASSWORD = '/forgot-password',
   PROFILE = '/profile',
+  ORDERS_HISTORY = '/profile/orders',
   RESET_PASSWORD = '/reset-password',
+  NOT_FOUND = '*',
 }
 
 export const routes: RouteObject[] = [
@@ -56,6 +59,10 @@ export const routes: RouteObject[] = [
             element: <ProfilePage />,
           },
         ],
+      },
+      {
+        path: ROUTES.NOT_FOUND,
+        element: <NotFoundPage />,
       },
     ],
   },
