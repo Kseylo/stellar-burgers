@@ -1,8 +1,8 @@
 import { Form, FormTitle, FormActions, FormAction } from '@/components/form'
 import {
-  Input,
   PasswordInput,
   Button,
+  EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import React, { useState } from 'react'
 import { useLoginMutation } from '@/api/auth'
@@ -40,15 +40,7 @@ export function LoginPage() {
     <Form onSubmit={onSubmit}>
       <FormTitle title={'Вход'} />
 
-      {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
-      <Input
-        value={form.email}
-        onChange={onChange}
-        placeholder={'E-mail'}
-        type={'email'}
-        name={'email'}
-        autoComplete={'email'}
-      />
+      <EmailInput value={form.email} onChange={onChange} name={'email'} />
       <PasswordInput
         value={form.password}
         onChange={onChange}

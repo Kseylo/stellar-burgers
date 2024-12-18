@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, FormAction, FormActions, FormTitle } from '@/components/form'
 import {
   Button,
-  Input,
+  EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ROUTES } from '@/config/router.tsx'
 import { useSendPasswordResetEmailMutation } from '@/api'
@@ -30,12 +30,11 @@ export function ForgotPasswordPage() {
     <Form onSubmit={onSubmit}>
       <FormTitle title={'Восстановление пароля'} />
 
-      {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
-      <Input
+      <EmailInput
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        name={'email'}
         placeholder={'Укажите e-mail'}
-        type={'email'}
       />
 
       <Button

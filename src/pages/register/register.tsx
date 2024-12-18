@@ -3,6 +3,7 @@ import {
   Button,
   Input,
   PasswordInput,
+  EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import React, { useState } from 'react'
 import { useRegisterMutation } from '@/api/auth'
@@ -49,15 +50,7 @@ export function RegisterPage() {
         name={'name'}
         autoComplete={'name'}
       />
-      {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
-      <Input
-        value={form.email}
-        onChange={onChange}
-        placeholder={'E-mail'}
-        type={'email'}
-        name={'email'}
-        autoComplete={'email'}
-      />
+      <EmailInput value={form.email} onChange={onChange} name={'email'} />
       <PasswordInput
         value={form.password}
         onChange={onChange}
