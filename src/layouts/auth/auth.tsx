@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router'
 import { useGetUserQuery } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { getCookie } from '@/utils'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 
 export function AuthLayout() {
   const accessToken = getCookie('accessToken')

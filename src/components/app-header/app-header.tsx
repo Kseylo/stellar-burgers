@@ -7,7 +7,7 @@ import {
 
 import styles from './app-header.module.css'
 import { NavigationLink } from './navigation-link'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 
 export function AppHeader() {
   return (

@@ -1,5 +1,5 @@
 import styles from './profile-sidebar.module.css'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 import { ProfileSidebarLink } from './profile-sidebar-link'
 import { useLogoutMutation } from '@/api'
 import { setCookie } from '@/utils'

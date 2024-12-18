@@ -1,7 +1,7 @@
 import styles from './not-found.module.css'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 
 export function NotFoundPage() {
   return (

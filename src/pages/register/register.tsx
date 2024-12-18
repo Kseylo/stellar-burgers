@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import { useRegisterMutation } from '@/api/auth'
 import { useNavigate } from 'react-router'
 import { setCookie } from '@/utils'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 
 export function RegisterPage() {
   const [form, setForm] = useState({

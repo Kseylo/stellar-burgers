@@ -4,7 +4,7 @@ import {
   Button,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 import { useSendPasswordResetEmailMutation } from '@/api'
 import { useNavigate } from 'react-router'
 import { useAppDispatch } from '@/store'

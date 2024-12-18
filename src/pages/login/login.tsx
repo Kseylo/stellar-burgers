@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 import { useLoginMutation } from '@/api/auth'
 import { setCookie } from '@/utils'
 import { useNavigate } from 'react-router'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 
 export function LoginPage() {
   const [form, setForm] = useState({

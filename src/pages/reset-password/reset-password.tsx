@@ -5,7 +5,7 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ROUTES } from '@/config/router.tsx'
+import { ROUTES } from '@/config/routes.ts'
 import { useResetPasswordMutation } from '@/api'
 import { Navigate, useNavigate } from 'react-router'
 import { useAppSelector } from '@/store'
