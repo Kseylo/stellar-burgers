@@ -13,20 +13,35 @@ interface User {
   name: string
 }
 
-interface ApiResponse {
+interface AuthResponse {
   success: boolean
   accessToken: string
   refreshToken: string
   user: User
 }
 
+interface UserResponse {
+  success: boolean
+  user: User
+}
+
+interface LogoutResponse {
+  success: boolean
+  message: string
+}
+
+const getAccessToken = () => getCookie('accessToken')
+const getRefreshToken = () => localStorage.getItem('refreshToken')
+const setTokens = (accessToken: string, refreshToken: string) => {
+  setCookie('accessToken', accessToken)
+  localStorage.setItem('refreshToken', refreshToken)
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: `${BASE_URL}/auth`,
   prepareHeaders: (headers) => {
-    const accessToken = getCookie('accessToken')
-    if (accessToken) {
-      headers.set('Authorization', accessToken)
-    }
+    const accessToken = getAccessToken()
+    if (accessToken) headers.set('Authorization', accessToken)
     return headers
   },
 })
@@ -37,14 +52,11 @@ const baseQueryWithReauth: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
-  if (result.error && result.error.status === 403) {
-    const refreshToken = localStorage.getItem('refreshToken')
+  if (result.error?.status === 403) {
+    const refreshToken = getRefreshToken()
+    if (!refreshToken) return result
 
-    if (!refreshToken) {
-      return result
-    }
-
-    const { data } = await baseQuery(
+    const refreshResult = await baseQuery(
       {
         url: '/token',
         method: 'POST',
@@ -54,14 +66,9 @@ const baseQueryWithReauth: BaseQueryFn<
       extraOptions,
     )
 
-    if (data) {
-      const { accessToken, refreshToken } = data as {
-        accessToken: string
-        refreshToken: string
-      }
-
-      setCookie('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
+    if (refreshResult.data) {
+      const { accessToken, refreshToken } = refreshResult.data as AuthResponse
+      setTokens(accessToken, refreshToken)
 
       result = await baseQuery(args, api, extraOptions)
     }
@@ -74,40 +81,41 @@ export const authApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     register: builder.mutation<
-      ApiResponse,
+      AuthResponse,
       { name: string; email: string; password: string }
     >({
-      query: (body) => {
-        return {
-          url: 'register',
-          method: 'POST',
-          body,
-        }
-      },
+      query: (body) => ({
+        url: 'register',
+        method: 'POST',
+        body,
+      }),
     }),
-    login: builder.mutation<ApiResponse, { email: string; password: string }>({
-      query: (body) => {
-        return {
-          url: 'login',
-          method: 'POST',
-          body,
-        }
-      },
+    login: builder.mutation<AuthResponse, { email: string; password: string }>({
+      query: (body) => ({
+        url: 'login',
+        method: 'POST',
+        body,
+      }),
     }),
-    getUser: builder.query<
-      Omit<ApiResponse, 'accessToken' | 'refreshToken'>,
-      void
-    >({
-      query: () => 'user',
+    logout: builder.mutation<LogoutResponse, void>({
+      query: () => ({
+        url: 'logout',
+        method: 'POST',
+        body: { token: getRefreshToken() },
+      }),
     }),
-    logout: builder.mutation<{ success: boolean; message: string }, void>({
-      query: () => {
-        return {
-          url: 'logout',
-          method: 'POST',
-          body: { token: localStorage.getItem('refreshToken') },
-        }
-      },
+    getUser: builder.query<UserResponse, void>({
+      query: () => ({
+        url: 'user',
+        method: 'GET',
+      }),
+    }),
+    updateUser: builder.mutation<UserResponse, Partial<User>>({
+      query: (body) => ({
+        url: 'user',
+        method: 'PATCH',
+        body,
+      }),
     }),
   }),
 })
@@ -115,6 +123,7 @@ export const authApi = createApi({
 export const {
   useRegisterMutation,
   useLoginMutation,
-  useGetUserQuery,
   useLogoutMutation,
+  useGetUserQuery,
+  useUpdateUserMutation,
 } = authApi
