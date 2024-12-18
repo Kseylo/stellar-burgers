@@ -7,11 +7,15 @@ import {
 import { ROUTES } from '@/config/router.tsx'
 import { useSendPasswordResetEmailMutation } from '@/api'
 import { useNavigate } from 'react-router'
+import { useAppDispatch } from '@/store'
+import { setRecoveryInitiated } from '@/services/password-recovery'
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
 
   const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
 
   const [sendPasswordResetEmail, { isLoading }] =
     useSendPasswordResetEmailMutation()
@@ -20,6 +24,7 @@ export function ForgotPasswordPage() {
     e.preventDefault()
     try {
       await sendPasswordResetEmail({ email }).unwrap()
+      dispatch(setRecoveryInitiated())
       navigate(ROUTES.RESET_PASSWORD)
     } catch (e) {
       console.error(e)

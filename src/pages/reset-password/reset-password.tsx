@@ -7,12 +7,19 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ROUTES } from '@/config/router.tsx'
 import { useResetPasswordMutation } from '@/api'
+import { Navigate, useNavigate } from 'react-router'
+import { useAppSelector } from '@/store'
+import { selectPasswordRecovery } from '@/services/password-recovery'
 
 export function ResetPasswordPage() {
+  const { isRecoveryInitiated } = useAppSelector(selectPasswordRecovery)
+
   const [form, setForm] = useState({
     password: '',
     token: '',
   })
+
+  const navigate = useNavigate()
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation()
 
@@ -24,9 +31,14 @@ export function ResetPasswordPage() {
     e.preventDefault()
     try {
       await resetPassword(form).unwrap()
+      navigate(ROUTES.LOGIN)
     } catch (e) {
       console.error(e)
     }
+  }
+
+  if (!isRecoveryInitiated) {
+    return <Navigate to={ROUTES.FORGOT_PASSWORD} />
   }
 
   return (
