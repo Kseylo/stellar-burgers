@@ -1,11 +1,8 @@
 import { NutritionInfo } from './nutrition-info'
 import styles from './ingredient-details.module.css'
-import { useAppSelector } from '@/store'
-import { selectIngredient } from '@/services/ingredient'
+import { Ingredient } from '@/types'
 
-export function IngredientDetails() {
-  const ingredient = useAppSelector(selectIngredient)!
-
+export function IngredientDetails({ ingredient }: { ingredient: Ingredient }) {
   return (
     <article className={`${styles.content} pb-5`}>
       <img src={ingredient.image_large} alt={ingredient.name} />

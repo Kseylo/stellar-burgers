@@ -6,5 +6,6 @@ export enum ROUTES {
   PROFILE = '/profile',
   ORDERS_HISTORY = '/profile/orders',
   RESET_PASSWORD = '/reset-password',
+  INGREDIENT = '/ingredients/:id',
   NOT_FOUND = '*',
 }

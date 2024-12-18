@@ -1,4 +1,4 @@
 .container {
-    display: flex;
-    gap: calc(var(--offset-base-size) * 15);
+  display: flex;
+  gap: calc(var(--offset-base-size) * 15);
 }

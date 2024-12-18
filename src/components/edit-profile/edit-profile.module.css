@@ -1,9 +1,9 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--offset-base-size) * 6);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size) * 6);
 }
 
 .actions {
-    margin-left: auto;
+  margin-left: auto;
 }

@@ -1,13 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
-import { ingredientSlice } from '@/services/ingredient'
 import { burgerSlice } from '@/services/burger'
 import { orderSlice } from '@/services/order'
 import { passwordRecoverySlice } from '@/services/password-recovery'
-import { ingredientsApi, ordersApi, authApi, passwordApi } from '@/api'
+import { authApi, ingredientsApi, ordersApi, passwordApi } from '@/api'
 
 const rootReducer = combineReducers({
-  [ingredientSlice.name]: ingredientSlice.reducer,
   [burgerSlice.name]: burgerSlice.reducer,
   [orderSlice.name]: orderSlice.reducer,
   [passwordRecoverySlice.name]: passwordRecoverySlice.reducer,

@@ -1,22 +1,36 @@
-import { BrowserRouter, Routes, Route } from 'react-router'
-import { RootLayout, ProtectedLayout, AuthLayout } from '@/layouts'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router'
+import { AuthLayout, ProtectedLayout, RootLayout } from '@/layouts'
 import { ROUTES } from '@/config/routes.ts'
 import {
-  HomePage,
-  LoginPage,
-  RegisterPage,
-  ProfilePage,
-  ResetPasswordPage,
   ForgotPasswordPage,
+  HomePage,
+  IngredientPage,
+  LoginPage,
   NotFoundPage,
+  ProfilePage,
+  RegisterPage,
+  ResetPasswordPage,
 } from '@/pages'
+import { IngredientModal } from '@/components/ingredient-modal'
 
 export function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <AppRoutes />
+    </BrowserRouter>
+  )
+}
+
+function AppRoutes() {
+  const location = useLocation()
+  const backgroundLocation = location.state && location.state.backgroundLocation
+
+  return (
+    <>
+      <Routes location={backgroundLocation || location}>
         <Route element={<RootLayout />}>
-          <Route index element={<HomePage />} />
+          <Route path={ROUTES.HOME} element={<HomePage />} />
+          <Route path={ROUTES.INGREDIENT} element={<IngredientPage />} />
           <Route element={<AuthLayout />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
@@ -35,6 +49,11 @@ export function App() {
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+      {backgroundLocation && (
+        <Routes>
+          <Route path={ROUTES.INGREDIENT} element={<IngredientModal />} />
+        </Routes>
+      )}
+    </>
   )
 }

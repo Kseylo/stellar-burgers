@@ -1,37 +1,33 @@
 import styles from './ingredient-section.module.css'
 import { IngredientCard } from './ingredient-card'
 import { Ingredient } from '@/types'
-import { useAppDispatch } from '@/store'
-import { setIngredient } from '@/services/ingredient'
 import { forwardRef } from 'react'
+import { Link, useLocation } from 'react-router'
 
 interface IngredientSectionProps {
   ingredients: Ingredient[]
-  onClick: () => void
   label: string
 }
 
 export const IngredientSection = forwardRef<
   HTMLDivElement,
   IngredientSectionProps
->(({ ingredients, onClick, label }, ref) => {
-  const dispatch = useAppDispatch()
-
-  const handleClick = (ingredient: Ingredient) => {
-    dispatch(setIngredient(ingredient))
-    onClick()
-  }
+>(({ ingredients, label }, ref) => {
+  const location = useLocation()
 
   return (
     <section ref={ref} className={styles.section}>
       <h2 className={'text text_type_main-medium'}>{label}</h2>
       <div className={`${styles.ingredients} mt-6 ml-4 mr-2`}>
         {ingredients.map((ingredient) => (
-          <IngredientCard
+          <Link
+            to={`/ingredients/${ingredient._id}`}
             key={ingredient._id}
-            ingredient={ingredient}
-            onClick={handleClick}
-          />
+            state={{ backgroundLocation: location }}
+            className={styles.link}
+          >
+            <IngredientCard key={ingredient._id} ingredient={ingredient} />
+          </Link>
         ))}
       </div>
     </section>

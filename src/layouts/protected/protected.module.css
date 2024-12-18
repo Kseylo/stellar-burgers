@@ -1,8 +1,6 @@
 .container {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    margin-top: calc(var(--offset-base-size) * 30);
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin-top: calc(var(--offset-base-size) * 30);
 }
-
-
