@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 :root {
-  --max-w-xl: 77.5rem;
+  --max-w-xs: 20rem;
   --max-w-lg: 32rem;
+  --max-w-xl: 77.5rem;
 }

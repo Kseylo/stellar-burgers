@@ -25,7 +25,6 @@ export function ProtectedLayout() {
 
   return (
     <div className={styles.container}>
-      Protected
       <Outlet />
     </div>
   )

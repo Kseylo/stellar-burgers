@@ -1,0 +1,9 @@
+.navContainer {
+    max-width: var(--max-w-xs)
+}
+.navList {
+    list-style: none;
+    padding-left: 0;
+}
+
+

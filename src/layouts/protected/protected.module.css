@@ -2,7 +2,7 @@
     display: flex;
     flex: 1;
     justify-content: center;
-    align-items: center;
+    margin-top: calc(var(--offset-base-size) * 30);
 }
 
 
