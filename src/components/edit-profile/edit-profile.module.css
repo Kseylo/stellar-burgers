@@ -3,3 +3,7 @@
     flex-direction: column;
     gap: calc(var(--offset-base-size) * 6);
 }
+
+.actions {
+    margin-left: auto;
+}
