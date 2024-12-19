@@ -21,6 +21,7 @@ import { useGetUserQuery } from '@/api'
 import { getAccessToken } from '@/utils'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
+import { LoadingSpinner } from '@/components/loading-spinner'
 
 export function BurgerConstructor() {
   const accessToken = getAccessToken()
@@ -56,6 +57,9 @@ export function BurgerConstructor() {
 
   const onSubmit = async () => {
     if (!userData) return navigate(ROUTES.LOGIN)
+
+    handleOpen()
+
     try {
       const {
         name,
@@ -64,10 +68,14 @@ export function BurgerConstructor() {
         ingredients: [bun!._id, ...ingredients.map((ing) => ing._id), bun!._id],
       }).unwrap()
       dispatch(setOrder({ name, number }))
-      handleOpen()
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const closeModal = () => {
+    dispatch(clearOrder())
+    handleClose()
   }
 
   return (
@@ -137,12 +145,16 @@ export function BurgerConstructor() {
       </div>
       {open && (
         <Modal
-          onClose={() => {
-            dispatch(clearOrder())
-            handleClose()
-          }}
+          onClose={closeModal}
+          title={isLoading ? 'Оформляем заказ...' : ''}
         >
-          <OrderDetails />
+          {isLoading ? (
+            <div className={styles.loadingContainer}>
+              <LoadingSpinner size={76} />
+            </div>
+          ) : (
+            <OrderDetails />
+          )}
         </Modal>
       )}
     </section>

@@ -9,3 +9,10 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--offset-base-size) * 15);
+}
