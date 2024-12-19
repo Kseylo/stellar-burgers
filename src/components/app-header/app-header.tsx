@@ -8,6 +8,7 @@ import {
 import styles from './app-header.module.css'
 import { NavigationLink } from './navigation-link'
 import { ROUTES } from '@/config/routes.ts'
+import { Link } from 'react-router'
 
 export function AppHeader() {
   return (
@@ -25,9 +26,9 @@ export function AppHeader() {
             to={'/orders'}
           />
         </ul>
-        <div className={`${styles.centerSection}`}>
+        <Link to={ROUTES.HOME} className={`${styles.centerSection}`}>
           <Logo />
-        </div>
+        </Link>
         <ul className={`${styles.rightSection}`}>
           <NavigationLink
             icon={ProfileIcon}
