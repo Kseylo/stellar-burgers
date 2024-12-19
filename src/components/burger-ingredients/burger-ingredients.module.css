@@ -1,6 +1,11 @@
 .scroll {
-    height: calc(100dvh - 324px);
-    overflow-y: auto;
+  height: calc(100dvh - 324px);
+  overflow-y: auto;
 }
 
-
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

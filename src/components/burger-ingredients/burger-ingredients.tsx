@@ -1,34 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
 import { IngredientsTabs } from './ingredients-tabs'
 import { tabs } from '@/config'
-import { Ingredient, TabItem } from '@/types'
-import { Modal } from '@/components/modal'
-import { IngredientDetails } from '@/components/ingredient-details'
-import { useModal } from '@/hooks/use-modal'
+import { TabItem } from '@/types'
 import styles from './burger-ingredients.module.css'
 import { IngredientSection } from './ingredient-section'
 import { IntersectionOptions, useInView } from 'react-intersection-observer'
-import { useAppDispatch } from '@/store'
-import { clearIngredient } from '@/services/ingredient'
+import { useGetIngredientsQuery } from '@/api'
+import { LoadingSpinner } from '@/components/loading-spinner'
 
 const intersectionOptions: IntersectionOptions = {
   threshold: 0,
 }
 
-export function BurgerIngredients({
-  ingredients,
-}: {
-  ingredients: Ingredient[]
-}) {
-  const { open, handleOpen, handleClose } = useModal()
-
+export function BurgerIngredients() {
   const [currentTab, setCurrentTab] = useState(tabs[0])
-
-  const dispatch = useAppDispatch()
 
   const [bunsRef, inViewBuns, bunEntry] = useInView(intersectionOptions)
   const [saucesRef, inViewSauces, saucesEntry] = useInView(intersectionOptions)
   const [mainsRef, inViewMains, mainsEntry] = useInView(intersectionOptions)
+
+  const { data: ingredients = [], isLoading } = useGetIngredientsQuery()
 
   const sections = useMemo(() => {
     return [
@@ -96,28 +87,21 @@ export function BurgerIngredients({
       />
 
       <article className={`${styles.scroll} mt-10`}>
-        {sections.map((section) => (
-          <IngredientSection
-            key={section.type}
-            ref={section.ref}
-            ingredients={section.ingredients}
-            onClick={handleOpen}
-            label={section.label}
-          />
-        ))}
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            <LoadingSpinner size={76} />
+          </div>
+        ) : (
+          sections.map((section) => (
+            <IngredientSection
+              key={section.type}
+              ref={section.ref}
+              ingredients={section.ingredients}
+              label={section.label}
+            />
+          ))
+        )}
       </article>
-
-      {open && (
-        <Modal
-          onClose={() => {
-            dispatch(clearIngredient())
-            handleClose()
-          }}
-          title={'Детали ингредиента'}
-        >
-          <IngredientDetails />
-        </Modal>
-      )}
     </section>
   )
 }

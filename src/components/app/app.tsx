@@ -1,23 +1,59 @@
-import { AppHeader } from '@/components/app-header'
-import { BurgerConstructor } from '@/components/burger-constructor'
-import { BurgerIngredients } from '@/components/burger-ingredients'
-
-import styles from './app.module.css'
-import { useGetIngredientsQuery } from '@/api'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router'
+import { ProtectedLayout, RootLayout } from '@/layouts'
+import { ROUTES } from '@/config/routes.ts'
+import {
+  ForgotPasswordPage,
+  HomePage,
+  IngredientPage,
+  LoginPage,
+  NotFoundPage,
+  ProfilePage,
+  RegisterPage,
+  ResetPasswordPage,
+} from '@/pages'
+import { IngredientModal } from '@/components/ingredient-modal'
 
 export function App() {
-  const { data, isLoading, isError } = useGetIngredientsQuery()
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  )
+}
+
+function AppRoutes() {
+  const location = useLocation()
+  const backgroundLocation = location.state && location.state.backgroundLocation
+
   return (
     <>
-      <AppHeader />
-      <main className={styles.main}>
-        <div className={`${styles.container}`}>
-          {!isLoading && !isError && data && (
-            <BurgerIngredients ingredients={data} />
-          )}
-          <BurgerConstructor />
-        </div>
-      </main>
+      <Routes location={backgroundLocation || location}>
+        <Route element={<RootLayout />}>
+          <Route path={ROUTES.HOME} element={<HomePage />} />
+          <Route path={ROUTES.INGREDIENT} element={<IngredientPage />} />
+          <Route element={<ProtectedLayout anonymous />}>
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+            <Route
+              path={ROUTES.FORGOT_PASSWORD}
+              element={<ForgotPasswordPage />}
+            />
+            <Route
+              path={ROUTES.RESET_PASSWORD}
+              element={<ResetPasswordPage />}
+            />
+          </Route>
+          <Route element={<ProtectedLayout />}>
+            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+          </Route>
+          <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+      {backgroundLocation && (
+        <Routes>
+          <Route path={ROUTES.INGREDIENT} element={<IngredientModal />} />
+        </Routes>
+      )}
     </>
   )
 }

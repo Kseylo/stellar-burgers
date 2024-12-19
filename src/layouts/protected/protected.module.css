@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+
+.anonymous {
+  margin-top: calc(var(--offset-base-size) * 45);
+}
+
+.protected {
+  margin-top: calc(var(--offset-base-size) * 30);
+}

@@ -1,10 +1,15 @@
 .section:not(:first-child) {
-    margin-top: calc(var(--offset-base-size) * 10);
+  margin-top: calc(var(--offset-base-size) * 10);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .ingredients {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: calc(var(--offset-base-size) * 6);
-    grid-row-gap: calc(var(--offset-base-size) * 8);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: calc(var(--offset-base-size) * 6);
+  grid-row-gap: calc(var(--offset-base-size) * 8);
 }

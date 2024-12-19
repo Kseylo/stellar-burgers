@@ -1,18 +1,18 @@
 .content {
-    background: var(--background);
-    border-radius: var(--common-border-radius-s);
-    width: 720px;
+  background: var(--background);
+  border-radius: var(--common-border-radius-s);
+  width: 720px;
 }
 
 .header {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .iconButton {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    margin-left: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-left: auto;
 }

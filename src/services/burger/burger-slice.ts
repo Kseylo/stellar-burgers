@@ -35,8 +35,17 @@ export const burgerSlice = createSlice({
       const ingredient = state.ingredients.splice(from, 1)[0]
       state.ingredients.splice(to, 0, ingredient)
     },
+    clearIngredients: (state) => {
+      state.ingredients = []
+      state.bun = null
+    },
   },
 })
 
-export const { setBun, addIngredient, removeIngredient, reorderIngredient } =
-  burgerSlice.actions
+export const {
+  setBun,
+  addIngredient,
+  removeIngredient,
+  reorderIngredient,
+  clearIngredients,
+} = burgerSlice.actions
