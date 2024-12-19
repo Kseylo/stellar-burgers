@@ -1,73 +1,7 @@
-import { BASE_URL } from '@/api'
-import {
-  BaseQueryFn,
-  createApi,
-  fetchBaseQuery,
-  FetchBaseQueryError,
-  FetchArgs,
-} from '@reduxjs/toolkit/query/react'
-import { getAccessToken, getRefreshToken, setTokens } from '@/utils'
-
-interface User {
-  email: string
-  name: string
-}
-
-interface AuthResponse {
-  success: boolean
-  accessToken: string
-  refreshToken: string
-  user: User
-}
-
-interface UserResponse {
-  success: boolean
-  user: User
-}
-
-interface LogoutResponse {
-  success: boolean
-  message: string
-}
-
-const baseQuery = fetchBaseQuery({
-  baseUrl: `${BASE_URL}/auth`,
-  prepareHeaders: (headers) => {
-    const accessToken = getAccessToken()
-    if (accessToken) headers.set('Authorization', accessToken)
-    return headers
-  },
-})
-
-const baseQueryWithReauth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions)
-  if (result.error?.status === 403) {
-    const refreshToken = getRefreshToken()
-    if (!refreshToken) return result
-
-    const refreshResult = await baseQuery(
-      {
-        url: '/token',
-        method: 'POST',
-        body: { token: refreshToken },
-      },
-      api,
-      extraOptions,
-    )
-
-    if (refreshResult.data) {
-      const { accessToken, refreshToken } = refreshResult.data as AuthResponse
-      setTokens(accessToken, refreshToken)
-
-      result = await baseQuery(args, api, extraOptions)
-    }
-  }
-  return result
-}
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { getRefreshToken } from '@/utils'
+import { User, UserResponse, LogoutResponse, AuthResponse } from '@/api'
+import { baseQueryWithReauth } from '@/api'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -78,34 +12,34 @@ export const authApi = createApi({
       { name: string; email: string; password: string }
     >({
       query: (body) => ({
-        url: 'register',
+        url: 'auth/register',
         method: 'POST',
         body,
       }),
     }),
     login: builder.mutation<AuthResponse, { email: string; password: string }>({
       query: (body) => ({
-        url: 'login',
+        url: 'auth/login',
         method: 'POST',
         body,
       }),
     }),
     logout: builder.mutation<LogoutResponse, void>({
       query: () => ({
-        url: 'logout',
+        url: 'auth/logout',
         method: 'POST',
         body: { token: getRefreshToken() },
       }),
     }),
     getUser: builder.query<UserResponse, void>({
       query: () => ({
-        url: 'user',
+        url: 'auth/user',
         method: 'GET',
       }),
     }),
     updateUser: builder.mutation<UserResponse, Partial<User>>({
       query: (body) => ({
-        url: 'user',
+        url: 'auth/user',
         method: 'PATCH',
         body,
       }),

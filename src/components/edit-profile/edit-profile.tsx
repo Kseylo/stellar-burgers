@@ -17,7 +17,7 @@ export function EditProfile() {
   const initialFormState = {
     name: user.name,
     email: user.email,
-    password: 'password',
+    password: '',
   }
 
   const [form, setForm] = useState(initialFormState)
