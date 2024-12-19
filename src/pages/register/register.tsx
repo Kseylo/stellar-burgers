@@ -28,7 +28,7 @@ export function RegisterPage() {
     try {
       const { accessToken, refreshToken } = await register(values).unwrap()
       setTokens(accessToken, refreshToken)
-      navigate(ROUTES.HOME)
+      navigate(0)
     } catch (e) {
       console.error(e)
     }

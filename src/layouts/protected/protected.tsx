@@ -1,30 +1,42 @@
-import { Navigate, Outlet } from 'react-router'
+import { Navigate, Outlet, useLocation } from 'react-router'
 
 import styles from './protected.module.css'
-import { getAccessToken } from '@/utils'
-import { useGetUserQuery } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { ROUTES } from '@/config/routes.ts'
+import { useAuthStatus } from '@/hooks/use-auth-status'
 
-export function ProtectedLayout() {
-  const accessToken = getAccessToken()
+export function ProtectedLayout({
+  anonymous = false,
+}: {
+  anonymous?: boolean
+}) {
+  const { data: userData, isLoading } = useAuthStatus()
 
-  const { currentData, isFetching } = useGetUserQuery(undefined, {
-    skip: !accessToken,
-  })
+  const location = useLocation()
+  const from = location.state?.from || ROUTES.HOME
 
-  if (isFetching) {
+  if (isLoading)
     return (
-      <div className={styles.container}>
-        <LoadingSpinner size={56} />
+      <div
+        className={`${styles.container} ${
+          anonymous ? styles.anonymous : styles.protected
+        }`}
+      >
+        <LoadingSpinner size={76} />
       </div>
     )
-  }
 
-  if (!currentData) return <Navigate to={ROUTES.LOGIN} />
+  if (anonymous && userData) return <Navigate to={from} />
+
+  if (!anonymous && !userData)
+    return <Navigate to={ROUTES.LOGIN} state={{ from: location }} />
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        anonymous ? styles.anonymous : styles.protected
+      }`}
+    >
       <Outlet />
     </div>
   )

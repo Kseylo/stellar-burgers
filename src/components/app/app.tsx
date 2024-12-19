@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router'
-import { AuthLayout, ProtectedLayout, RootLayout } from '@/layouts'
+import { ProtectedLayout, RootLayout } from '@/layouts'
 import { ROUTES } from '@/config/routes.ts'
 import {
   ForgotPasswordPage,
@@ -31,7 +31,7 @@ function AppRoutes() {
         <Route element={<RootLayout />}>
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.INGREDIENT} element={<IngredientPage />} />
-          <Route element={<AuthLayout />}>
+          <Route element={<ProtectedLayout anonymous />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
             <Route

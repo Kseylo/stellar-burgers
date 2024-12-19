@@ -6,10 +6,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
 import { useLoginMutation } from '@/api/auth'
-import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
 import { setTokens } from '@/utils'
 import { useForm } from '@/hooks/use-form'
+import { useNavigate } from 'react-router'
 
 export function LoginPage() {
   const { values, handleChange } = useForm({
@@ -17,16 +17,16 @@ export function LoginPage() {
     password: '',
   })
 
-  const navigate = useNavigate()
-
   const [login, { isLoading }] = useLoginMutation()
+
+  const navigate = useNavigate()
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const { accessToken, refreshToken } = await login(values).unwrap()
       setTokens(accessToken, refreshToken)
-      navigate(ROUTES.HOME)
+      navigate(0)
     } catch (e) {
       console.error(e)
     }
