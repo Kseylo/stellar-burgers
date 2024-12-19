@@ -6,6 +6,7 @@ import { baseQueryWithReauth } from '@/api'
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     register: builder.mutation<
       AuthResponse,
@@ -30,12 +31,14 @@ export const authApi = createApi({
         method: 'POST',
         body: { token: getRefreshToken() },
       }),
+      invalidatesTags: ['User'],
     }),
     getUser: builder.query<UserResponse, void>({
       query: () => ({
         url: 'auth/user',
         method: 'GET',
       }),
+      providesTags: ['User'],
     }),
     updateUser: builder.mutation<UserResponse, Partial<User>>({
       query: (body) => ({
@@ -43,6 +46,7 @@ export const authApi = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['User'],
     }),
   }),
 })
