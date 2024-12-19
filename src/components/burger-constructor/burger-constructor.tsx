@@ -18,12 +18,12 @@ import { useMemo } from 'react'
 import { useCreateOrderMutation } from '@/api/orders'
 import { clearOrder, setOrder } from '@/services/order'
 import { useGetUserQuery } from '@/api'
-import { getCookie } from '@/utils'
+import { getAccessToken } from '@/utils'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
 
 export function BurgerConstructor() {
-  const accessToken = getCookie('accessToken')
+  const accessToken = getAccessToken()
   const { open, handleOpen, handleClose } = useModal()
   const navigate = useNavigate()
 

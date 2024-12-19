@@ -2,11 +2,11 @@ import styles from './auth.module.css'
 import { Navigate, Outlet } from 'react-router'
 import { useGetUserQuery } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
-import { getCookie } from '@/utils'
 import { ROUTES } from '@/config/routes.ts'
+import { getAccessToken } from '@/utils'
 
 export function AuthLayout() {
-  const accessToken = getCookie('accessToken')
+  const accessToken = getAccessToken()
 
   const { currentData, isFetching } = useGetUserQuery(undefined, {
     skip: !accessToken,

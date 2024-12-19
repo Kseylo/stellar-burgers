@@ -6,7 +6,7 @@ import {
   FetchBaseQueryError,
   FetchArgs,
 } from '@reduxjs/toolkit/query/react'
-import { getCookie, setCookie } from '@/utils'
+import { getAccessToken, getRefreshToken, setTokens } from '@/utils'
 
 interface User {
   email: string
@@ -28,13 +28,6 @@ interface UserResponse {
 interface LogoutResponse {
   success: boolean
   message: string
-}
-
-const getAccessToken = () => getCookie('accessToken')
-const getRefreshToken = () => localStorage.getItem('refreshToken')
-const setTokens = (accessToken: string, refreshToken: string) => {
-  setCookie('accessToken', accessToken)
-  localStorage.setItem('refreshToken', refreshToken)
 }
 
 const baseQuery = fetchBaseQuery({

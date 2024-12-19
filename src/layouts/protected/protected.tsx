@@ -1,13 +1,13 @@
 import { Navigate, Outlet } from 'react-router'
 
 import styles from './protected.module.css'
-import { getCookie } from '@/utils'
+import { getAccessToken } from '@/utils'
 import { useGetUserQuery } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { ROUTES } from '@/config/routes.ts'
 
 export function ProtectedLayout() {
-  const accessToken = getCookie('accessToken')
+  const accessToken = getAccessToken()
 
   const { currentData, isFetching } = useGetUserQuery(undefined, {
     skip: !accessToken,

@@ -47,3 +47,14 @@ export function setCookie(
 
   document.cookie = updatedCookie
 }
+
+export const getAccessToken = () => getCookie('accessToken')
+export const getRefreshToken = () => localStorage.getItem('refreshToken')
+export const setAccessToken = (accessToken: string) =>
+  setCookie('accessToken', accessToken)
+export const setRefreshToken = (refreshToken: string) =>
+  localStorage.setItem('refreshToken', refreshToken)
+export const setTokens = (accessToken: string, refreshToken: string) => {
+  setAccessToken(accessToken)
+  setRefreshToken(refreshToken)
+}

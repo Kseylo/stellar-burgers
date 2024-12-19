@@ -2,14 +2,14 @@ import styles from './profile-sidebar.module.css'
 import { ROUTES } from '@/config/routes.ts'
 import { ProfileSidebarLink } from './profile-sidebar-link'
 import { useLogoutMutation } from '@/api'
-import { setCookie } from '@/utils'
+import { setAccessToken } from '@/utils'
 
 export function ProfileSidebar() {
   const [logout] = useLogoutMutation()
 
   const onLogout = async () => {
     await logout()
-    setCookie('accessToken', '')
+    setAccessToken('')
   }
 
   return (

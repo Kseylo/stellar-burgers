@@ -8,7 +8,7 @@ import {
 import React, { useState } from 'react'
 import { useRegisterMutation } from '@/api/auth'
 import { useNavigate } from 'react-router'
-import { setCookie } from '@/utils'
+import { setTokens } from '@/utils'
 import { ROUTES } from '@/config/routes.ts'
 
 export function RegisterPage() {
@@ -30,8 +30,7 @@ export function RegisterPage() {
     e.preventDefault()
     try {
       const { accessToken, refreshToken } = await register(form).unwrap()
-      setCookie('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
+      setTokens(accessToken, refreshToken)
       navigate(ROUTES.HOME)
     } catch (e) {
       console.error(e)

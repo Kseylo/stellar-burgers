@@ -6,9 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import React, { useState } from 'react'
 import { useLoginMutation } from '@/api/auth'
-import { setCookie } from '@/utils'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
+import { setTokens } from '@/utils'
 
 export function LoginPage() {
   const [form, setForm] = useState({
@@ -28,8 +28,7 @@ export function LoginPage() {
     e.preventDefault()
     try {
       const { accessToken, refreshToken } = await login(form).unwrap()
-      setCookie('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
+      setTokens(accessToken, refreshToken)
       navigate(ROUTES.HOME)
     } catch (e) {
       console.error(e)
