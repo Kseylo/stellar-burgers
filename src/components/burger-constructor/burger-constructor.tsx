@@ -17,15 +17,24 @@ import { ConstructorSkeleton } from '@/components/constructor-skeleton'
 import { useMemo } from 'react'
 import { useCreateOrderMutation } from '@/api/orders'
 import { clearOrder, setOrder } from '@/services/order'
+import { useGetUserQuery } from '@/api'
+import { getCookie } from '@/utils'
+import { useNavigate } from 'react-router'
+import { ROUTES } from '@/config/routes.ts'
 
 export function BurgerConstructor() {
+  const accessToken = getCookie('accessToken')
   const { open, handleOpen, handleClose } = useModal()
+  const navigate = useNavigate()
 
   const { bun, ingredients } = useAppSelector(selectBurger)
 
   const dispatch = useAppDispatch()
 
   const [createOrder, { isLoading }] = useCreateOrderMutation()
+  const { data: userData } = useGetUserQuery(undefined, {
+    skip: !accessToken,
+  })
 
   const [, dropRefIngredients] = useDrop({
     accept: 'ingredient',
@@ -46,6 +55,7 @@ export function BurgerConstructor() {
   }, [bun, ingredients])
 
   const onSubmit = async () => {
+    if (!userData) return navigate(ROUTES.LOGIN)
     try {
       const {
         name,

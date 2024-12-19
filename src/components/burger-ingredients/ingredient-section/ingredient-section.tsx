@@ -3,6 +3,7 @@ import { IngredientCard } from './ingredient-card'
 import { Ingredient } from '@/types'
 import { forwardRef } from 'react'
 import { Link, useLocation } from 'react-router'
+import { ROUTES } from '@/config/routes.ts'
 
 interface IngredientSectionProps {
   ingredients: Ingredient[]
@@ -21,7 +22,7 @@ export const IngredientSection = forwardRef<
       <div className={`${styles.ingredients} mt-6 ml-4 mr-2`}>
         {ingredients.map((ingredient) => (
           <Link
-            to={`/ingredients/${ingredient._id}`}
+            to={ROUTES.INGREDIENT.replace(':id', ingredient._id)}
             key={ingredient._id}
             state={{ backgroundLocation: location }}
             className={styles.link}
