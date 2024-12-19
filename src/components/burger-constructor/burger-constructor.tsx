@@ -22,14 +22,12 @@ import { ConstructorSkeleton } from '@/components/constructor-skeleton'
 import { useMemo } from 'react'
 import { useCreateOrderMutation } from '@/api/orders'
 import { clearOrder, setOrder } from '@/services/order'
-import { useGetUserQuery } from '@/api'
-import { getAccessToken } from '@/utils'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
 import { LoadingSpinner } from '@/components/loading-spinner'
+import { useAuthStatus } from '@/hooks/use-auth-status'
 
 export function BurgerConstructor() {
-  const accessToken = getAccessToken()
   const { open, handleOpen, handleClose } = useModal()
   const navigate = useNavigate()
 
@@ -38,9 +36,7 @@ export function BurgerConstructor() {
   const dispatch = useAppDispatch()
 
   const [createOrder, { isLoading }] = useCreateOrderMutation()
-  const { data: userData } = useGetUserQuery(undefined, {
-    skip: !accessToken,
-  })
+  const { currentData: userData } = useAuthStatus()
 
   const [, dropRefIngredients] = useDrop({
     accept: 'ingredient',
