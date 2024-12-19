@@ -5,14 +5,15 @@ import {
   PasswordInput,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useState } from 'react'
+import React from 'react'
 import { useRegisterMutation } from '@/api/auth'
 import { useNavigate } from 'react-router'
 import { setTokens } from '@/utils'
 import { ROUTES } from '@/config/routes.ts'
+import { useForm } from '@/hooks/use-form'
 
 export function RegisterPage() {
-  const [form, setForm] = useState({
+  const { values, handleChange } = useForm({
     name: '',
     email: '',
     password: '',
@@ -22,14 +23,10 @@ export function RegisterPage() {
 
   const [register, { isLoading }] = useRegisterMutation()
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const { accessToken, refreshToken } = await register(form).unwrap()
+      const { accessToken, refreshToken } = await register(values).unwrap()
       setTokens(accessToken, refreshToken)
       navigate(ROUTES.HOME)
     } catch (e) {
@@ -42,17 +39,17 @@ export function RegisterPage() {
       <FormTitle title={'Регистрация'} />
       {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
       <Input
-        value={form.name}
-        onChange={onChange}
+        value={values.name}
+        onChange={handleChange}
         placeholder={'Имя'}
         type={'text'}
         name={'name'}
         autoComplete={'name'}
       />
-      <EmailInput value={form.email} onChange={onChange} name={'email'} />
+      <EmailInput value={values.email} onChange={handleChange} name={'email'} />
       <PasswordInput
-        value={form.password}
-        onChange={onChange}
+        value={values.password}
+        onChange={handleChange}
         name={'password'}
         autoComplete={'new-password'}
       />

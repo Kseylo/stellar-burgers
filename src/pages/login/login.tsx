@@ -4,14 +4,15 @@ import {
   Button,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useState } from 'react'
+import React from 'react'
 import { useLoginMutation } from '@/api/auth'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
 import { setTokens } from '@/utils'
+import { useForm } from '@/hooks/use-form'
 
 export function LoginPage() {
-  const [form, setForm] = useState({
+  const { values, handleChange } = useForm({
     email: '',
     password: '',
   })
@@ -20,14 +21,10 @@ export function LoginPage() {
 
   const [login, { isLoading }] = useLoginMutation()
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const { accessToken, refreshToken } = await login(form).unwrap()
+      const { accessToken, refreshToken } = await login(values).unwrap()
       setTokens(accessToken, refreshToken)
       navigate(ROUTES.HOME)
     } catch (e) {
@@ -39,10 +36,10 @@ export function LoginPage() {
     <Form onSubmit={onSubmit}>
       <FormTitle title={'Вход'} />
 
-      <EmailInput value={form.email} onChange={onChange} name={'email'} />
+      <EmailInput value={values.email} onChange={handleChange} name={'email'} />
       <PasswordInput
-        value={form.password}
-        onChange={onChange}
+        value={values.password}
+        onChange={handleChange}
         name={'password'}
         autoComplete={'current-password'}
       />

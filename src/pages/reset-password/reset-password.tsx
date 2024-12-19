@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form, FormAction, FormActions, FormTitle } from '@/components/form'
 import {
   Button,
@@ -10,11 +10,12 @@ import { useResetPasswordMutation } from '@/api'
 import { Navigate, useNavigate } from 'react-router'
 import { useAppSelector } from '@/store'
 import { selectPasswordRecovery } from '@/services/password-recovery'
+import { useForm } from '@/hooks/use-form'
 
 export function ResetPasswordPage() {
   const { isRecoveryInitiated } = useAppSelector(selectPasswordRecovery)
 
-  const [form, setForm] = useState({
+  const { values, handleChange } = useForm({
     password: '',
     token: '',
   })
@@ -23,14 +24,10 @@ export function ResetPasswordPage() {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation()
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      await resetPassword(form).unwrap()
+      await resetPassword(values).unwrap()
       navigate(ROUTES.LOGIN)
     } catch (e) {
       console.error(e)
@@ -46,16 +43,16 @@ export function ResetPasswordPage() {
       <FormTitle title={'Восстановление пароля'} />
 
       <PasswordInput
-        value={form.password}
-        onChange={onChange}
+        value={values.password}
+        onChange={handleChange}
         placeholder={'Введите новый пароль'}
         autoComplete={'new-password'}
         name={'password'}
       />
       {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
       <Input
-        value={form.token}
-        onChange={onChange}
+        value={values.token}
+        onChange={handleChange}
         placeholder={'Введите код из письма'}
         type={'text'}
         name={'token'}

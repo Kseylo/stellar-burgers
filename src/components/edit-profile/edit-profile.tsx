@@ -9,6 +9,7 @@ import {
 
 import styles from './edit-profile.module.css'
 import { useGetUserQuery, useUpdateUserMutation } from '@/api'
+import { useForm } from '@/hooks/use-form'
 
 export function EditProfile() {
   const { data } = useGetUserQuery()
@@ -20,18 +21,15 @@ export function EditProfile() {
     password: '',
   }
 
-  const [form, setForm] = useState(initialFormState)
+  const { values, handleChange, setValues } = useForm(initialFormState)
+
   const [nameDisabled, setNameDisabled] = useState(true)
   const nameRef = useRef<HTMLInputElement | null>(null)
 
   const [updateUser, { isLoading }] = useUpdateUserMutation()
 
   const isFormChanged =
-    JSON.stringify(form) !== JSON.stringify(initialFormState)
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+    JSON.stringify(values) !== JSON.stringify(initialFormState)
 
   const onIconClick = () => {
     if (nameRef.current) {
@@ -45,14 +43,14 @@ export function EditProfile() {
   }
 
   const resetForm = () => {
-    setForm(initialFormState)
+    setValues(initialFormState)
     setNameDisabled(true)
   }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      await updateUser(form).unwrap()
+      await updateUser(values).unwrap()
     } catch (e) {
       console.error(e)
     }
@@ -62,8 +60,8 @@ export function EditProfile() {
     <form className={styles.form} onSubmit={onSubmit}>
       {/*  @ts-expect-error complains about onPointerEnterCapture, onPointerLeaveCapture */}
       <Input
-        value={form.name}
-        onChange={onChange}
+        value={values.name}
+        onChange={handleChange}
         name={'name'}
         placeholder={'Имя'}
         icon={'EditIcon'}
@@ -74,16 +72,16 @@ export function EditProfile() {
       />
 
       <EmailInput
-        value={form.email}
-        onChange={onChange}
+        value={values.email}
+        onChange={handleChange}
         name={'email'}
         placeholder={'Логин'}
         isIcon
       />
 
       <PasswordInput
-        value={form.password}
-        onChange={onChange}
+        value={values.password}
+        onChange={handleChange}
         name={'password'}
         icon={'EditIcon'}
       />
