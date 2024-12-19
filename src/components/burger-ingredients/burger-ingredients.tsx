@@ -1,25 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
 import { IngredientsTabs } from './ingredients-tabs'
 import { tabs } from '@/config'
-import { Ingredient, TabItem } from '@/types'
+import { TabItem } from '@/types'
 import styles from './burger-ingredients.module.css'
 import { IngredientSection } from './ingredient-section'
 import { IntersectionOptions, useInView } from 'react-intersection-observer'
+import { useGetIngredientsQuery } from '@/api'
+import { LoadingSpinner } from '@/components/loading-spinner'
 
 const intersectionOptions: IntersectionOptions = {
   threshold: 0,
 }
 
-export function BurgerIngredients({
-  ingredients,
-}: {
-  ingredients: Ingredient[]
-}) {
+export function BurgerIngredients() {
   const [currentTab, setCurrentTab] = useState(tabs[0])
 
   const [bunsRef, inViewBuns, bunEntry] = useInView(intersectionOptions)
   const [saucesRef, inViewSauces, saucesEntry] = useInView(intersectionOptions)
   const [mainsRef, inViewMains, mainsEntry] = useInView(intersectionOptions)
+
+  const { data: ingredients = [], isLoading } = useGetIngredientsQuery()
 
   const sections = useMemo(() => {
     return [
@@ -87,14 +87,20 @@ export function BurgerIngredients({
       />
 
       <article className={`${styles.scroll} mt-10`}>
-        {sections.map((section) => (
-          <IngredientSection
-            key={section.type}
-            ref={section.ref}
-            ingredients={section.ingredients}
-            label={section.label}
-          />
-        ))}
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            <LoadingSpinner size={76} />
+          </div>
+        ) : (
+          sections.map((section) => (
+            <IngredientSection
+              key={section.type}
+              ref={section.ref}
+              ingredients={section.ingredients}
+              label={section.label}
+            />
+          ))
+        )}
       </article>
     </section>
   )
