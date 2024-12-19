@@ -31,6 +31,7 @@ export const authApi = createApi({
         method: 'POST',
         body: { token: getRefreshToken() },
       }),
+      invalidatesTags: ['User'],
     }),
     getUser: builder.query<UserResponse, void>({
       query: () => ({
