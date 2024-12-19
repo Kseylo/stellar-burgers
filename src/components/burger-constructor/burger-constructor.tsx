@@ -12,7 +12,12 @@ import { useDrop } from 'react-dnd'
 import { Ingredient } from '@/types'
 import { IngredientType } from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { selectBurger, addIngredient, setBun } from '@/services/burger'
+import {
+  selectBurger,
+  addIngredient,
+  setBun,
+  clearIngredients,
+} from '@/services/burger'
 import { ConstructorSkeleton } from '@/components/constructor-skeleton'
 import { useMemo } from 'react'
 import { useCreateOrderMutation } from '@/api/orders'
@@ -68,6 +73,7 @@ export function BurgerConstructor() {
         ingredients: [bun!._id, ...ingredients.map((ing) => ing._id), bun!._id],
       }).unwrap()
       dispatch(setOrder({ name, number }))
+      dispatch(clearIngredients())
     } catch (error) {
       console.error(error)
     }
