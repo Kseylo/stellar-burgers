@@ -19,3 +19,12 @@ npm run dev
 ```bash
 npm run build
 ```
+
+Основные технологии
+- React
+- Redux Toolkit
+- React Router
+- React DnD
+- TypeScript
+- Vite
+- ESLint и Prettier
