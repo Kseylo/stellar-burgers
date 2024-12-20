@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '@/store'
 
-export const selectIngredient = createSelector(
+export const selectPasswordRecovery = createSelector(
   (state: RootState) => state,
-  (state: RootState) => state.ingredient.ingredient,
+  (state: RootState) => state.passwordRecovery,
 )

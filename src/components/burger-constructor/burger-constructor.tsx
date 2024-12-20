@@ -12,20 +12,31 @@ import { useDrop } from 'react-dnd'
 import { Ingredient } from '@/types'
 import { IngredientType } from '@/config'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { selectBurger, addIngredient, setBun } from '@/services/burger'
+import {
+  selectBurger,
+  addIngredient,
+  setBun,
+  clearIngredients,
+} from '@/services/burger'
 import { ConstructorSkeleton } from '@/components/constructor-skeleton'
 import { useMemo } from 'react'
 import { useCreateOrderMutation } from '@/api/orders'
 import { clearOrder, setOrder } from '@/services/order'
+import { useNavigate } from 'react-router'
+import { ROUTES } from '@/config/routes.ts'
+import { LoadingSpinner } from '@/components/loading-spinner'
+import { useAuthStatus } from '@/hooks/use-auth-status'
 
 export function BurgerConstructor() {
   const { open, handleOpen, handleClose } = useModal()
+  const navigate = useNavigate()
 
   const { bun, ingredients } = useAppSelector(selectBurger)
 
   const dispatch = useAppDispatch()
 
   const [createOrder, { isLoading }] = useCreateOrderMutation()
+  const { currentData: userData } = useAuthStatus()
 
   const [, dropRefIngredients] = useDrop({
     accept: 'ingredient',
@@ -46,6 +57,10 @@ export function BurgerConstructor() {
   }, [bun, ingredients])
 
   const onSubmit = async () => {
+    if (!userData) return navigate(ROUTES.LOGIN)
+
+    handleOpen()
+
     try {
       const {
         name,
@@ -54,10 +69,15 @@ export function BurgerConstructor() {
         ingredients: [bun!._id, ...ingredients.map((ing) => ing._id), bun!._id],
       }).unwrap()
       dispatch(setOrder({ name, number }))
-      handleOpen()
+      dispatch(clearIngredients())
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const closeModal = () => {
+    dispatch(clearOrder())
+    handleClose()
   }
 
   return (
@@ -127,12 +147,16 @@ export function BurgerConstructor() {
       </div>
       {open && (
         <Modal
-          onClose={() => {
-            dispatch(clearOrder())
-            handleClose()
-          }}
+          onClose={closeModal}
+          title={isLoading ? 'Оформляем заказ...' : ''}
         >
-          <OrderDetails />
+          {isLoading ? (
+            <div className={styles.loadingContainer}>
+              <LoadingSpinner size={76} />
+            </div>
+          ) : (
+            <OrderDetails />
+          )}
         </Modal>
       )}
     </section>

@@ -8,10 +8,9 @@ import { selectBurger } from '@/services/burger'
 
 interface IngredientCardProps {
   ingredient: Ingredient
-  onClick: (ingredient: Ingredient) => void
 }
 
-export function IngredientCard({ ingredient, onClick }: IngredientCardProps) {
+export function IngredientCard({ ingredient }: IngredientCardProps) {
   const [, dragRef] = useDrag({
     type: 'ingredient',
     item: ingredient,
@@ -25,11 +24,7 @@ export function IngredientCard({ ingredient, onClick }: IngredientCardProps) {
   ).length
 
   return (
-    <article
-      ref={dragRef}
-      className={styles.ingredient}
-      onClick={() => onClick(ingredient)}
-    >
+    <article ref={dragRef} className={styles.ingredient}>
       <img
         src={ingredient.image}
         alt={ingredient.name}

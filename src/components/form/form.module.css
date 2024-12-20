@@ -1,0 +1,24 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--offset-base-size) * 6);
+}
+
+.title {
+  text-align: center;
+}
+
+.additionalActions {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size) * 4);
+  margin-top: calc(var(--offset-base-size) * 14);
+}
+
+.additionalAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--offset-base-size) * 2);
+}

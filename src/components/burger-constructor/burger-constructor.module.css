@@ -1,11 +1,18 @@
 .scroll {
-    height: calc(100dvh - 526px);
-    overflow-y: auto;
-    overflow-x: hidden;
+  height: calc(100dvh - 526px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .totalContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--offset-base-size) * 15);
 }
