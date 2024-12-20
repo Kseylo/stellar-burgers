@@ -1,6 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { getRefreshToken } from '@/utils'
-import { User, UserResponse, LogoutResponse, AuthResponse } from '@/api'
+import {
+  User,
+  UserResponse,
+  LogoutResponse,
+  AuthResponse,
+  RegisterRequest,
+  LoginRequest,
+} from '@/api'
 import { baseQueryWithReauth } from '@/api'
 
 export const authApi = createApi({
@@ -8,17 +15,14 @@ export const authApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ['User'],
   endpoints: (builder) => ({
-    register: builder.mutation<
-      AuthResponse,
-      { name: string; email: string; password: string }
-    >({
+    register: builder.mutation<AuthResponse, RegisterRequest>({
       query: (body) => ({
         url: 'auth/register',
         method: 'POST',
         body,
       }),
     }),
-    login: builder.mutation<AuthResponse, { email: string; password: string }>({
+    login: builder.mutation<AuthResponse, LoginRequest>({
       query: (body) => ({
         url: 'auth/login',
         method: 'POST',
