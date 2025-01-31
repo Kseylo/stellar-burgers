@@ -23,7 +23,7 @@ export function AppHeader() {
           <NavigationLink
             icon={ListIcon}
             title={'Лента заказов'}
-            to={'/orders'}
+            to={ROUTES.FEED}
           />
         </ul>
         <Link to={ROUTES.HOME} className={`${styles.centerSection}`}>

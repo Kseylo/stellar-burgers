@@ -1,0 +1,7 @@
+.scroll {
+    height: 100dvh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 4);
+}

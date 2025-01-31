@@ -7,5 +7,7 @@ export enum ROUTES {
   ORDERS_HISTORY = '/profile/orders',
   RESET_PASSWORD = '/reset-password',
   INGREDIENT = '/ingredients/:id',
+  FEED = '/feed',
+  FEED_ITEM = '/feed/:id',
   NOT_FOUND = '*',
 }
