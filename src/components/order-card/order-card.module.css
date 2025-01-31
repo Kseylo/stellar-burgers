@@ -1,0 +1,36 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 6);
+    background-color: var(--background);
+    padding: calc(var(--offset-base-size) * 6);
+    border-radius: var(--common-border-radius-s);
+}
+
+.cardDetails{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ingredients {
+    display: flex;
+    align-items: center;
+}
+
+.ingredient {
+    position: relative;
+    margin-left: -21px;
+    z-index: 1;
+}
+
+.ingredient:first-child {
+    margin-left: 0;
+}
+
+.ingredient:nth-child(1) { z-index: 6; }
+.ingredient:nth-child(2) { z-index: 5; }
+.ingredient:nth-child(3) { z-index: 4; }
+.ingredient:nth-child(4) { z-index: 3; }
+.ingredient:nth-child(5) { z-index: 2; }
+.ingredient:nth-child(6) { z-index: 1; }
