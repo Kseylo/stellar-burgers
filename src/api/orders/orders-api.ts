@@ -38,6 +38,7 @@ export const ordersApi = createApi({
                 draft.orders = data.orders
                 draft.total = data.total
                 draft.totalToday = data.totalToday
+                draft.success = true
               })
             }
           }
