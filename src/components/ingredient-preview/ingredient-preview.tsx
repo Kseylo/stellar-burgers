@@ -1,7 +1,13 @@
-import bun from '@/assets/images/bun.png'
 import styles from './ingredient-preview.module.css'
 
-export function IngredientPreview({ more }: { more?: number }) {
+interface IngredientPreviewProps {
+  src: string
+  more?: number
+}
+
+export function IngredientPreview(props: IngredientPreviewProps) {
+  const { src, more } = props
+
   return (
     <div className={styles.image}>
       {more && (
@@ -9,7 +15,7 @@ export function IngredientPreview({ more }: { more?: number }) {
           +{more}
         </div>
       )}
-      <img src={bun} alt="Ингредиент" />
+      <img src={src} alt="Ингредиент" />
     </div>
   )
 }

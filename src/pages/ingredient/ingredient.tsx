@@ -1,19 +1,28 @@
 import { IngredientDetails } from '@/components/ingredient-details'
 import styles from './ingredient.module.css'
-import { useParams } from 'react-router'
-import { useGetIngredientsQuery } from '@/api'
+import { useParams, useNavigate } from 'react-router'
+import { ingredientsSelectors, useGetIngredientsQuery } from '@/api'
+import { useMemo } from 'react'
+import { ROUTES } from '@/config/routes.ts'
 
 export function IngredientPage() {
   const { id } = useParams()
-  const { data } = useGetIngredientsQuery()
-  const ingredient = data?.find((ingredient) => ingredient._id === id)
+  const { data: ingredientsState, isLoading } = useGetIngredientsQuery()
+  const navigate = useNavigate()
 
-  if (!ingredient) return null
+  const ingredient = useMemo(() => {
+    if (!ingredientsState || !id) return null
+    return ingredientsSelectors.selectById(ingredientsState, id)
+  }, [ingredientsState, id])
+
+  if (isLoading) return null
+
+  if (!ingredient) navigate(ROUTES.NOT_FOUND)
 
   return (
     <section className={styles.container}>
       <h1 className={'text text_type_main-large'}>Детали ингредиента</h1>
-      <IngredientDetails ingredient={ingredient} />
+      <IngredientDetails ingredient={ingredient!} />
     </section>
   )
 }

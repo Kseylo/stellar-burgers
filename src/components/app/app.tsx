@@ -11,7 +11,6 @@ import {
   RegisterPage,
   ResetPasswordPage,
   FeedPage,
-  FeedItemPage,
 } from '@/pages'
 import { IngredientModal } from '@/components/ingredient-modal'
 
@@ -34,7 +33,6 @@ function AppRoutes() {
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.INGREDIENT} element={<IngredientPage />} />
           <Route path={ROUTES.FEED} element={<FeedPage />} />
-          <Route path={ROUTES.FEED_ITEM} element={<FeedItemPage />} />
           <Route element={<ProtectedLayout anonymous />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
