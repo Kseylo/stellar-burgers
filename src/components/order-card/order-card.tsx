@@ -4,6 +4,8 @@ import { IngredientPreview } from '@/components/ingredient-preview'
 import { Order } from '@/api'
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Ingredient } from '@/types'
+import { OrderHeader } from '@/components/order-header'
+import { getOrderIngredients, getOrderTotalPrice } from '@/utils'
 
 interface OrderCardProps {
   order: Order
@@ -13,14 +15,8 @@ interface OrderCardProps {
 export function OrderCard(props: OrderCardProps) {
   const { order, ingredientsMap } = props
 
-  const orderIngredients = order.ingredients
-    .map((id) => ingredientsMap[id])
-    .filter(Boolean)
-
-  const totalPrice = orderIngredients.reduce(
-    (acc, ingredient) => acc + ingredient.price,
-    0,
-  )
+  const orderIngredients = getOrderIngredients(order, ingredientsMap)
+  const totalPrice = getOrderTotalPrice(orderIngredients)
 
   const visibleIngredients =
     orderIngredients.length > 6
@@ -39,7 +35,7 @@ export function OrderCard(props: OrderCardProps) {
           date={new Date(order.createdAt)}
         />
       </div>
-      <h3 className={'text text_type_main-medium'}>{order.name}</h3>
+      <OrderHeader title={order.name} />
       <div className={styles.cardDetails}>
         <div className={styles.ingredients}>
           {visibleIngredients.map((ingredient, index) => (

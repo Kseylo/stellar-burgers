@@ -1,29 +1,32 @@
 import styles from './feed-orders.module.css'
 
 import { OrderCard } from '../order-card'
-import { ingredientsSelectors, type Order, useGetIngredientsQuery } from '@/api'
+import { type Order } from '@/api'
+import { Link, useLocation } from 'react-router'
+import { ROUTES } from '@/config/routes.ts'
+import { Ingredient } from '@/types'
 
 interface FeedOrdersProps {
   orders: Order[]
+  ingredientsMap: Record<string, Ingredient>
 }
 
 export function FeedOrders(props: FeedOrdersProps) {
-  const { orders } = props
+  const { orders, ingredientsMap } = props
 
-  const { data: ingredientsState } = useGetIngredientsQuery()
-
-  if (!ingredientsState) return null
-
-  const ingredientsMap = ingredientsSelectors.selectEntities(ingredientsState)
+  const location = useLocation()
 
   return (
     <div className={`${styles.scroll} mt-5`}>
       {orders.map((order) => (
-        <OrderCard
+        <Link
+          to={ROUTES.ORDER.replace(':id', order._id)}
           key={order._id}
-          order={order}
-          ingredientsMap={ingredientsMap}
-        />
+          state={{ backgroundLocation: location }}
+          className={styles.link}
+        >
+          <OrderCard order={order} ingredientsMap={ingredientsMap} />
+        </Link>
       ))}
     </div>
   )

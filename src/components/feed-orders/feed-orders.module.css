@@ -5,3 +5,8 @@
     flex-direction: column;
     gap: calc(var(--offset-base-size) * 4);
 }
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
