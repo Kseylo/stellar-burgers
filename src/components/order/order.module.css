@@ -1,0 +1,29 @@
+.ingredients {
+    max-height: 305px;
+    overflow-y: auto;
+    list-style: none;
+    padding-left: 0;
+    padding-right: calc(var(--offset-base-size) * 6);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 4);
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--offset-base-size) * 4)
+}
+
+.ingredientPrice {
+    margin-left: auto;
+    display: flex;
+    gap: calc(var(--offset-base-size) * 2)
+}
+
+.timePrice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: calc(var(--offset-base-size) * 10);
+}

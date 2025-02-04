@@ -17,6 +17,10 @@ export interface IngredientWithKey extends Ingredient {
   key: string
 }
 
+export interface IngredientWithCount extends Ingredient {
+  count: number
+}
+
 export interface TabItem {
   type: string
   label: string

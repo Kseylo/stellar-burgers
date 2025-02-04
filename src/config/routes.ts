@@ -8,6 +8,6 @@ export enum ROUTES {
   RESET_PASSWORD = '/reset-password',
   INGREDIENT = '/ingredients/:id',
   FEED = '/feed',
-  FEED_ITEM = '/feed/:id',
+  ORDER = '/feed/:id',
   NOT_FOUND = '*',
 }

@@ -11,8 +11,10 @@ import {
   RegisterPage,
   ResetPasswordPage,
   FeedPage,
+  OrderPage,
 } from '@/pages'
 import { IngredientModal } from '@/components/ingredient-modal'
+import { OrderModal } from '@/components/order-modal'
 
 export function App() {
   return (
@@ -33,6 +35,7 @@ function AppRoutes() {
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.INGREDIENT} element={<IngredientPage />} />
           <Route path={ROUTES.FEED} element={<FeedPage />} />
+          <Route path={ROUTES.ORDER} element={<OrderPage />} />
           <Route element={<ProtectedLayout anonymous />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
@@ -54,6 +57,7 @@ function AppRoutes() {
       {backgroundLocation && (
         <Routes>
           <Route path={ROUTES.INGREDIENT} element={<IngredientModal />} />
+          <Route path={ROUTES.ORDER} element={<OrderModal />} />
         </Routes>
       )}
     </>
