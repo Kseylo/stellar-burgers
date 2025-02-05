@@ -2,6 +2,14 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '@/api'
 import { OrdersResponse } from '@/api/orders/types.ts'
 import { RootState } from '@/store'
+import { setupOrdersListeners } from '@/api/orders/helpers.ts'
+
+const initialOrdersData: OrdersResponse = {
+  orders: [],
+  total: 0,
+  totalToday: 0,
+  success: false,
+}
 
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
@@ -21,39 +29,23 @@ export const ordersApi = createApi({
     }),
     getAllOrders: builder.query<OrdersResponse, void>({
       queryFn() {
-        return { data: { orders: [], total: 0, totalToday: 0, success: false } }
+        return { data: initialOrdersData }
       },
       async onCacheEntryAdded(
         _arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
       ) {
-        const ws = new WebSocket('wss://norma.nomoreparties.space/orders/all')
-
-        try {
-          await cacheDataLoaded
-          const listener = (event: MessageEvent) => {
-            const data = JSON.parse(event.data)
-
-            if (data.success && data.orders) {
-              updateCachedData((draft) => {
-                draft.orders = data.orders
-                draft.total = data.total
-                draft.totalToday = data.totalToday
-                draft.success = true
-              })
-            }
-          }
-          ws.addEventListener('message', listener)
-        } catch (e) {
-          console.error(e)
-        }
-        await cacheEntryRemoved
-        ws.close()
+        await setupOrdersListeners({
+          wsUrl: 'wss://norma.nomoreparties.space/orders/all',
+          cacheDataLoaded,
+          cacheEntryRemoved,
+          updateCachedData,
+        })
       },
     }),
     getUserOrders: builder.query<OrdersResponse, void>({
       queryFn() {
-        return { data: { orders: [], total: 0, totalToday: 0, success: false } }
+        return { data: initialOrdersData }
       },
       async onCacheEntryAdded(
         _arg,
@@ -62,28 +54,12 @@ export const ordersApi = createApi({
         const accessToken = (getState() as RootState).auth.accessToken
         if (!accessToken) return
 
-        const ws = new WebSocket(
-          `wss://norma.nomoreparties.space/orders?token=${accessToken.split(' ')[1]}`,
-        )
-        try {
-          await cacheDataLoaded
-          const listener = (event: MessageEvent) => {
-            const data = JSON.parse(event.data)
-            if (data.success && data.orders) {
-              updateCachedData((draft) => {
-                draft.orders = data.orders
-                draft.total = data.total
-                draft.totalToday = data.totalToday
-                draft.success = true
-              })
-            }
-          }
-          ws.addEventListener('message', listener)
-        } catch (e) {
-          console.error(e)
-        }
-        await cacheEntryRemoved
-        ws.close()
+        await setupOrdersListeners({
+          wsUrl: `wss://norma.nomoreparties.space/orders?token=${accessToken.split(' ')[1]}`,
+          cacheDataLoaded,
+          cacheEntryRemoved,
+          updateCachedData,
+        })
       },
     }),
   }),
