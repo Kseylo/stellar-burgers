@@ -1,24 +1,32 @@
 import { Modal } from '@/components/modal'
-import { useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import {
   ingredientsSelectors,
   useGetAllOrdersQuery,
   useGetIngredientsQuery,
+  useGetUserOrdersQuery,
 } from '@/api'
 import { Center } from '@/components/center'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { Order } from '@/components/order'
+import { ROUTES } from '@/config/routes.ts'
 
 export function OrderModal() {
   const navigate = useNavigate()
   const { id } = useParams()
+  const location = useLocation()
 
-  const { data } = useGetAllOrdersQuery()
+  const isProfile = location.pathname.startsWith(ROUTES.PROFILE_ORDERS)
+
+  const allOrdersQuery = useGetAllOrdersQuery(undefined, { skip: isProfile })
+  const userOrdersQuery = useGetUserOrdersQuery(undefined, { skip: !isProfile })
+  const ordersData = isProfile ? userOrdersQuery.data : allOrdersQuery.data
+
   const { data: ingredientsState } = useGetIngredientsQuery()
 
   const handleClose = () => navigate(-1)
 
-  if (!data || data.orders.length === 0 || !ingredientsState) {
+  if (!ordersData || ordersData.orders.length === 0 || !ingredientsState) {
     return (
       <Modal onClose={handleClose} title="Загрузка...">
         <Center>
@@ -27,7 +35,7 @@ export function OrderModal() {
       </Modal>
     )
   }
-  const order = data.orders.find((order) => order._id === id)
+  const order = ordersData.orders.find((order) => order._id === id)
   if (!order) {
     return (
       <Modal onClose={handleClose} title="Ошибка">

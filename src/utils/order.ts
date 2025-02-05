@@ -25,3 +25,9 @@ export function getUniqueOrderIngredients(orderIngredients: Ingredient[]) {
   }, {})
   return Object.values(ingredientMap)
 }
+
+export function sortOrders(orders: Order[]) {
+  return [...orders].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )
+}

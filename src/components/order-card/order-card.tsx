@@ -10,10 +10,11 @@ import { getOrderIngredients, getOrderTotalPrice } from '@/utils'
 interface OrderCardProps {
   order: Order
   ingredientsMap: Record<string, Ingredient>
+  showStatus?: boolean
 }
 
 export function OrderCard(props: OrderCardProps) {
-  const { order, ingredientsMap } = props
+  const { order, ingredientsMap, showStatus } = props
 
   const orderIngredients = getOrderIngredients(order, ingredientsMap)
   const totalPrice = getOrderTotalPrice(orderIngredients)
@@ -35,7 +36,10 @@ export function OrderCard(props: OrderCardProps) {
           date={new Date(order.createdAt)}
         />
       </div>
-      <OrderHeader title={order.name} />
+      <OrderHeader
+        title={order.name}
+        status={showStatus ? order.status : undefined}
+      />
       <div className={styles.cardDetails}>
         <div className={styles.ingredients}>
           {visibleIngredients.map((ingredient, index) => (

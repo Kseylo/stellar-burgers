@@ -17,11 +17,7 @@ export function ProtectedLayout({
 
   if (isLoading)
     return (
-      <div
-        className={`${styles.container} ${
-          anonymous ? styles.anonymous : styles.protected
-        }`}
-      >
+      <div className={`${anonymous ? styles.anonymous : ''}`}>
         <LoadingSpinner size={76} />
       </div>
     )
@@ -32,11 +28,7 @@ export function ProtectedLayout({
     return <Navigate to={ROUTES.LOGIN} state={{ from: location }} />
 
   return (
-    <div
-      className={`${styles.container} ${
-        anonymous ? styles.anonymous : styles.protected
-      }`}
-    >
+    <div className={`${anonymous ? styles.anonymous : ''}`}>
       <Outlet />
     </div>
   )

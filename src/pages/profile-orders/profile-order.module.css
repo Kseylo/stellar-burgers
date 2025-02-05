@@ -1,0 +1,4 @@
+.loadingContainer {
+    margin-top: calc(var(--offset-base-size) * 10);
+    flex: 1;
+}

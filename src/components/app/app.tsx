@@ -70,6 +70,7 @@ function AppRoutes() {
         <Routes>
           <Route path={ROUTES.INGREDIENT} element={<IngredientModal />} />
           <Route path={ROUTES.ORDER} element={<OrderModal />} />
+          <Route path={ROUTES.PROFILE_ORDERS_DETAIL} element={<OrderModal />} />
         </Routes>
       )}
     </>

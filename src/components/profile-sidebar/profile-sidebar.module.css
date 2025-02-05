@@ -1,5 +1,6 @@
 .navContainer {
   max-width: var(--max-w-xs);
+  margin-top: calc(var(--offset-base-size) * 30);
 }
 .navList {
   list-style: none;

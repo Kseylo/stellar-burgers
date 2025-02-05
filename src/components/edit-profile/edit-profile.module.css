@@ -1,4 +1,5 @@
 .form {
+  margin-top: calc(var(--offset-base-size) * 30);
   display: flex;
   flex-direction: column;
   gap: calc(var(--offset-base-size) * 6);
