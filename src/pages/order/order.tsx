@@ -3,6 +3,7 @@ import {
   ingredientsSelectors,
   useGetAllOrdersQuery,
   useGetIngredientsQuery,
+  useGetUserOrdersQuery,
 } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import styles from './order.module.css'
@@ -13,10 +14,14 @@ export function OrderPage() {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const { data } = useGetAllOrdersQuery()
+  const isProfile = location.pathname.startsWith(ROUTES.PROFILE_ORDERS)
+
+  const allOrdersQuery = useGetAllOrdersQuery()
+  const userOrdersQuery = useGetUserOrdersQuery()
+  const ordersData = isProfile ? userOrdersQuery.data : allOrdersQuery.data
   const { data: ingredientsState } = useGetIngredientsQuery()
 
-  if (!data || data.orders.length === 0 || !ingredientsState) {
+  if (!ordersData || ordersData.orders.length === 0 || !ingredientsState) {
     return (
       <section className={styles.container}>
         <LoadingSpinner size={76} />
@@ -24,7 +29,7 @@ export function OrderPage() {
     )
   }
 
-  const order = data.orders.find((order) => order._id === id)
+  const order = ordersData.orders.find((order) => order._id === id)
   if (!order) {
     navigate(ROUTES.NOT_FOUND)
     return null
