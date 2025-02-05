@@ -1,13 +1,12 @@
+import styles from '@/layouts/profile/profile.module.css'
 import { ProfileSidebar } from '@/components/profile-sidebar'
-import { EditProfile } from '@/components/edit-profile'
+import { Outlet } from 'react-router'
 
-import styles from './profile.module.css'
-
-export function ProfilePage() {
+export function ProfileLayout() {
   return (
     <div className={styles.container}>
       <ProfileSidebar />
-      <EditProfile />
+      <Outlet />
     </div>
   )
 }

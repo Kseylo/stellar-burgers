@@ -8,6 +8,7 @@ export function ProfileSidebarLink(props: NavLinkProps) {
         className={({ isActive }) =>
           `text text_type_main-medium ${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
         }
+        end
         {...props}
       >
         {props.children}

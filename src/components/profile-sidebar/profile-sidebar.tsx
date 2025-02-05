@@ -21,7 +21,7 @@ export function ProfileSidebar() {
     <nav className={styles.navContainer}>
       <ol className={styles.navList}>
         <ProfileSidebarLink to={ROUTES.PROFILE}>Профиль</ProfileSidebarLink>
-        <ProfileSidebarLink to={ROUTES.ORDERS_HISTORY}>
+        <ProfileSidebarLink to={ROUTES.PROFILE_ORDERS}>
           История заказов
         </ProfileSidebarLink>
         <ProfileSidebarLink to={ROUTES.HOME} onClick={onLogout}>

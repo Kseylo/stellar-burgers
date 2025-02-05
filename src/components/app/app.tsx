@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router'
-import { ProtectedLayout, RootLayout } from '@/layouts'
+import { ProfileLayout, ProtectedLayout, RootLayout } from '@/layouts'
 import { ROUTES } from '@/config/routes.ts'
 import {
   ForgotPasswordPage,
@@ -7,11 +7,13 @@ import {
   IngredientPage,
   LoginPage,
   NotFoundPage,
-  ProfilePage,
+  EditProfilePage,
   RegisterPage,
   ResetPasswordPage,
   FeedPage,
   OrderPage,
+  ProfileOrdersPage,
+  ProfileOrdersDetailPage,
 } from '@/pages'
 import { IngredientModal } from '@/components/ingredient-modal'
 import { OrderModal } from '@/components/order-modal'
@@ -49,7 +51,17 @@ function AppRoutes() {
             />
           </Route>
           <Route element={<ProtectedLayout />}>
-            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+            <Route path={ROUTES.PROFILE} element={<ProfileLayout />}>
+              <Route index element={<EditProfilePage />} />
+              <Route
+                path={ROUTES.PROFILE_ORDERS}
+                element={<ProfileOrdersPage />}
+              />
+            </Route>
+            <Route
+              path={ROUTES.PROFILE_ORDERS_DETAIL}
+              element={<ProfileOrdersDetailPage />}
+            />
           </Route>
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
