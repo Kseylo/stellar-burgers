@@ -22,7 +22,7 @@ export function ProtectedLayout({
 
   if (isLoading)
     return (
-      <div className={`${anonymous ? styles.anonymous : ''}`}>
+      <div className={styles.anonymous}>
         <LoadingSpinner size={76} />
       </div>
     )
