@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '@/api'
 import { OrdersResponse } from '@/api/orders/types.ts'
-import { getAccessToken } from '@/utils'
+import { RootState } from '@/store'
 
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
@@ -57,11 +57,13 @@ export const ordersApi = createApi({
       },
       async onCacheEntryAdded(
         _arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved, getState },
       ) {
-        const accessToken = getAccessToken()?.split(' ')[1]
+        const accessToken = (getState() as RootState).auth.accessToken
+        if (!accessToken) return
+
         const ws = new WebSocket(
-          `wss://norma.nomoreparties.space/orders?token=${accessToken}`,
+          `wss://norma.nomoreparties.space/orders?token=${accessToken.split(' ')[1]}`,
         )
         try {
           await cacheDataLoaded

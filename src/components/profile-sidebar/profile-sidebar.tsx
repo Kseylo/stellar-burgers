@@ -1,20 +1,18 @@
 import styles from './profile-sidebar.module.css'
 import { ROUTES } from '@/config/routes.ts'
 import { ProfileSidebarLink } from './profile-sidebar-link'
-import { useLogoutMutation } from '@/api'
-import { setAccessToken, setRefreshToken } from '@/utils'
+import { authApi, useLogoutMutation } from '@/api'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { selectRefreshToken } from '@/services/auth'
 
 export function ProfileSidebar() {
   const [logout] = useLogoutMutation()
+  const dispatch = useAppDispatch()
+  const refreshToken = useAppSelector(selectRefreshToken)!
 
   const onLogout = async () => {
-    try {
-      setAccessToken('')
-      await logout().unwrap()
-      setRefreshToken('')
-    } catch (e) {
-      console.error(e)
-    }
+    await logout({ token: refreshToken })
+    dispatch(authApi.util.resetApiState())
   }
 
   return (

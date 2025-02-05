@@ -1,5 +1,4 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-import { getRefreshToken } from '@/utils'
 import {
   User,
   UserResponse,
@@ -29,11 +28,11 @@ export const authApi = createApi({
         body,
       }),
     }),
-    logout: builder.mutation<LogoutResponse, void>({
-      query: () => ({
+    logout: builder.mutation<LogoutResponse, { token: string }>({
+      query: (body) => ({
         url: 'auth/logout',
         method: 'POST',
-        body: { token: getRefreshToken() },
+        body,
       }),
       invalidatesTags: ['User'],
     }),

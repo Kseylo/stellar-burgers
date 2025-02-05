@@ -7,8 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
 import { useRegisterMutation } from '@/api/auth'
-import { useNavigate } from 'react-router'
-import { setTokens } from '@/utils'
+import { useLocation, useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
 import { useForm } from '@/hooks/use-form'
 
@@ -20,18 +19,15 @@ export function RegisterPage() {
   })
 
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || ROUTES.HOME
 
   const [register, { isLoading }] = useRegisterMutation()
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      const { accessToken, refreshToken } = await register(values).unwrap()
-      setTokens(accessToken, refreshToken)
-      navigate(0)
-    } catch (e) {
-      console.error(e)
-    }
+    await register(values)
+    navigate(from)
   }
 
   return (
