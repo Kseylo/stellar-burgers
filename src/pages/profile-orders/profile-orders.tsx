@@ -14,11 +14,23 @@ export function ProfileOrdersPage() {
   const { data } = useGetUserOrdersQuery()
   const { data: ingredientsState } = useGetIngredientsQuery()
 
-  if (!data || data.orders.length === 0 || !ingredientsState) {
+  if (!data || !data.success || !ingredientsState) {
     return (
       <div className={styles.loadingContainer}>
         <Center>
           <LoadingSpinner size={76} />
+        </Center>
+      </div>
+    )
+  }
+
+  if (data.orders.length === 0) {
+    return (
+      <div className={styles.emptyContainer}>
+        <Center>
+          <h2 className={'text text_type_main-medium'}>
+            У вас пока нет заказов
+          </h2>
         </Center>
       </div>
     )
