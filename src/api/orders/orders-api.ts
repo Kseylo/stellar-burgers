@@ -14,6 +14,7 @@ const initialOrdersData: OrdersResponse = {
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
   baseQuery: baseQueryWithReauth,
+  tagTypes: ['userOrders'],
   endpoints: (builder) => ({
     createOrder: builder.mutation<
       { name: string; order: { number: number }; success: boolean },
@@ -26,6 +27,7 @@ export const ordersApi = createApi({
           body: { ingredients },
         }
       },
+      invalidatesTags: ['userOrders'],
     }),
     getAllOrders: builder.query<OrdersResponse, void>({
       queryFn() {
@@ -61,6 +63,7 @@ export const ordersApi = createApi({
           updateCachedData,
         })
       },
+      providesTags: ['userOrders'],
     }),
   }),
 })

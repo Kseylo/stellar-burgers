@@ -6,6 +6,7 @@ import {
   AuthResponse,
   RegisterRequest,
   LoginRequest,
+  ordersApi,
 } from '@/api'
 import { baseQueryWithReauth } from '@/api'
 
@@ -35,6 +36,10 @@ export const authApi = createApi({
         body,
       }),
       invalidatesTags: ['User'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled
+        dispatch(ordersApi.util.invalidateTags(['userOrders']))
+      },
     }),
     getUser: builder.query<UserResponse, void>({
       query: () => ({
