@@ -19,7 +19,7 @@ export function OrderHeader(props: OrderTitleProps) {
       <h2 className={'text text_type_main-medium'}>{title}</h2>
       {status && (
         <p
-          className={`text text_type_main-default mt-3 ${ORDER_STATUS.DONE && styles.done}`}
+          className={`text text_type_main-default mt-3 ${status === ORDER_STATUS.DONE ? styles.done : ''}`}
         >
           {orderStatuses[status]}
         </p>
