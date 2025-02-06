@@ -5,7 +5,7 @@ import { TabItem } from '@/types'
 import styles from './burger-ingredients.module.css'
 import { IngredientSection } from './ingredient-section'
 import { IntersectionOptions, useInView } from 'react-intersection-observer'
-import { useGetIngredientsQuery } from '@/api'
+import { useGetIngredientsQuery, ingredientsSelectors } from '@/api'
 import { LoadingSpinner } from '@/components/loading-spinner'
 
 const intersectionOptions: IntersectionOptions = {
@@ -19,7 +19,13 @@ export function BurgerIngredients() {
   const [saucesRef, inViewSauces, saucesEntry] = useInView(intersectionOptions)
   const [mainsRef, inViewMains, mainsEntry] = useInView(intersectionOptions)
 
-  const { data: ingredients = [], isLoading } = useGetIngredientsQuery()
+  const { data: ingredientsState, isLoading } = useGetIngredientsQuery()
+
+  const ingredients = useMemo(
+    () =>
+      ingredientsState ? ingredientsSelectors.selectAll(ingredientsState) : [],
+    [ingredientsState],
+  )
 
   const sections = useMemo(() => {
     return [

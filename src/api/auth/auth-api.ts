@@ -1,5 +1,4 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-import { getRefreshToken } from '@/utils'
 import {
   User,
   UserResponse,
@@ -7,6 +6,7 @@ import {
   AuthResponse,
   RegisterRequest,
   LoginRequest,
+  ordersApi,
 } from '@/api'
 import { baseQueryWithReauth } from '@/api'
 
@@ -29,13 +29,17 @@ export const authApi = createApi({
         body,
       }),
     }),
-    logout: builder.mutation<LogoutResponse, void>({
-      query: () => ({
+    logout: builder.mutation<LogoutResponse, { token: string }>({
+      query: (body) => ({
         url: 'auth/logout',
         method: 'POST',
-        body: { token: getRefreshToken() },
+        body,
       }),
       invalidatesTags: ['User'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled
+        dispatch(ordersApi.util.invalidateTags(['userOrders']))
+      },
     }),
     getUser: builder.query<UserResponse, void>({
       query: () => ({

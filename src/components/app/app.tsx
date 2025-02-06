@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router'
-import { ProtectedLayout, RootLayout } from '@/layouts'
+import { ProfileLayout, ProtectedLayout, RootLayout } from '@/layouts'
 import { ROUTES } from '@/config/routes.ts'
 import {
   ForgotPasswordPage,
@@ -7,11 +7,15 @@ import {
   IngredientPage,
   LoginPage,
   NotFoundPage,
-  ProfilePage,
+  EditProfilePage,
   RegisterPage,
   ResetPasswordPage,
+  FeedPage,
+  OrderPage,
+  ProfileOrdersPage,
 } from '@/pages'
 import { IngredientModal } from '@/components/ingredient-modal'
+import { OrderModal } from '@/components/order-modal'
 
 export function App() {
   return (
@@ -31,6 +35,8 @@ function AppRoutes() {
         <Route element={<RootLayout />}>
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.INGREDIENT} element={<IngredientPage />} />
+          <Route path={ROUTES.FEED} element={<FeedPage />} />
+          <Route path={ROUTES.ORDER} element={<OrderPage />} />
           <Route element={<ProtectedLayout anonymous />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
@@ -44,7 +50,17 @@ function AppRoutes() {
             />
           </Route>
           <Route element={<ProtectedLayout />}>
-            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+            <Route path={ROUTES.PROFILE} element={<ProfileLayout />}>
+              <Route index element={<EditProfilePage />} />
+              <Route
+                path={ROUTES.PROFILE_ORDERS}
+                element={<ProfileOrdersPage />}
+              />
+            </Route>
+            <Route
+              path={ROUTES.PROFILE_ORDERS_DETAIL}
+              element={<OrderPage />}
+            />
           </Route>
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
@@ -52,6 +68,13 @@ function AppRoutes() {
       {backgroundLocation && (
         <Routes>
           <Route path={ROUTES.INGREDIENT} element={<IngredientModal />} />
+          <Route path={ROUTES.ORDER} element={<OrderModal />} />
+          <Route element={<ProtectedLayout />}>
+            <Route
+              path={ROUTES.PROFILE_ORDERS_DETAIL}
+              element={<OrderModal />}
+            />
+          </Route>
         </Routes>
       )}
     </>

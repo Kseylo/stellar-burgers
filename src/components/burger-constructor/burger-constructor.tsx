@@ -25,18 +25,18 @@ import { clearOrder, setOrder } from '@/services/order'
 import { useNavigate } from 'react-router'
 import { ROUTES } from '@/config/routes.ts'
 import { LoadingSpinner } from '@/components/loading-spinner'
-import { useAuthStatus } from '@/hooks/use-auth-status'
+import { selectAccessToken } from '@/services/auth'
 
 export function BurgerConstructor() {
   const { open, handleOpen, handleClose } = useModal()
   const navigate = useNavigate()
 
   const { bun, ingredients } = useAppSelector(selectBurger)
+  const accessToken = useAppSelector(selectAccessToken)
 
   const dispatch = useAppDispatch()
 
   const [createOrder, { isLoading }] = useCreateOrderMutation()
-  const { currentData: userData } = useAuthStatus()
 
   const [, dropRefIngredients] = useDrop({
     accept: 'ingredient',
@@ -57,7 +57,7 @@ export function BurgerConstructor() {
   }, [bun, ingredients])
 
   const onSubmit = async () => {
-    if (!userData) return navigate(ROUTES.LOGIN)
+    if (!accessToken) return navigate(ROUTES.LOGIN)
 
     handleOpen()
 

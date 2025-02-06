@@ -7,9 +7,8 @@ import {
 import React from 'react'
 import { useLoginMutation } from '@/api/auth'
 import { ROUTES } from '@/config/routes.ts'
-import { setTokens } from '@/utils'
 import { useForm } from '@/hooks/use-form'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 export function LoginPage() {
   const { values, handleChange } = useForm({
@@ -17,19 +16,16 @@ export function LoginPage() {
     password: '',
   })
 
-  const [login, { isLoading }] = useLoginMutation()
-
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || ROUTES.HOME
+
+  const [login, { isLoading }] = useLoginMutation()
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      const { accessToken, refreshToken } = await login(values).unwrap()
-      setTokens(accessToken, refreshToken)
-      navigate(0)
-    } catch (e) {
-      console.error(e)
-    }
+    await login(values)
+    navigate(from)
   }
 
   return (
