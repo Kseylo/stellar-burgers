@@ -26,7 +26,7 @@ export function OrderModal() {
 
   const handleClose = () => navigate(-1)
 
-  if (!ordersData || ordersData.orders.length === 0 || !ingredientsState) {
+  if (!ordersData || !ordersData.success || !ingredientsState) {
     return (
       <Modal onClose={handleClose} title="Загрузка...">
         <Center>

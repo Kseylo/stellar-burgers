@@ -21,7 +21,7 @@ export function OrderPage() {
   const ordersData = isProfile ? userOrdersQuery.data : allOrdersQuery.data
   const { data: ingredientsState } = useGetIngredientsQuery()
 
-  if (!ordersData || ordersData.orders.length === 0 || !ingredientsState) {
+  if (!ordersData || !ordersData.success || !ingredientsState) {
     return (
       <section className={styles.container}>
         <LoadingSpinner size={76} />

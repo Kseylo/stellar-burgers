@@ -15,7 +15,7 @@ export function FeedPage() {
   const { data } = useGetAllOrdersQuery()
   const { data: ingredientsState } = useGetIngredientsQuery()
 
-  if (!data || data.orders.length === 0 || !ingredientsState) {
+  if (!data || !data.success || !ingredientsState) {
     return (
       <section className={styles.container}>
         <h1 className={'text text_type_main-large'}>Лента заказов</h1>
