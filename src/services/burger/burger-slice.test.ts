@@ -1,4 +1,4 @@
-import { test, expect, vi, describe } from 'vitest'
+import { test, expect, describe } from 'vitest'
 
 import {
   reducer,
@@ -25,10 +25,6 @@ const mockIngredient: Ingredient = {
   image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
   __v: 0,
 }
-
-vi.mock('uuid', () => ({
-  v4: () => 'mocked-uuid',
-}))
 
 describe('burger slice', () => {
   test('should return the initial state', () => {
