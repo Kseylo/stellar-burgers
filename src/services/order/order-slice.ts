@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface OrderState {
+export interface OrderState {
   name: string
   number: number
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   name: '',
   number: 0,
 }
@@ -23,3 +23,4 @@ export const orderSlice = createSlice({
 })
 
 export const { setOrder, clearOrder } = orderSlice.actions
+export const { reducer } = orderSlice
