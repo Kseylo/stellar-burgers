@@ -7,7 +7,7 @@ interface BurgerState {
   ingredients: IngredientWithKey[]
 }
 
-const initialState: BurgerState = {
+export const initialState: BurgerState = {
   bun: null,
   ingredients: [],
 }
@@ -49,3 +49,4 @@ export const {
   reorderIngredient,
   clearIngredients,
 } = burgerSlice.actions
+export const { reducer } = burgerSlice
