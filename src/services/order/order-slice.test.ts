@@ -1,4 +1,4 @@
-import { test, expect } from 'vitest'
+import { test, expect, describe } from 'vitest'
 import {
   reducer,
   OrderState,
@@ -16,17 +16,19 @@ const mockOrder: OrderState = {
   number: 67741,
 }
 
-test('should set the order', () => {
-  const action = setOrder(mockOrder)
-  const state = reducer(initialState, action)
-  expect(state).toEqual(mockOrder)
-})
+describe('order slice', () => {
+  test('should set the order', () => {
+    const action = setOrder(mockOrder)
+    const state = reducer(initialState, action)
+    expect(state).toEqual(mockOrder)
+  })
 
-test('should clear the order', () => {
-  const action = setOrder(mockOrder)
-  const state = reducer(initialState, action)
+  test('should clear the order', () => {
+    const action = setOrder(mockOrder)
+    const state = reducer(initialState, action)
 
-  const action2 = clearOrder()
-  const state2 = reducer(state, action2)
-  expect(state2).toEqual(initialState)
+    const action2 = clearOrder()
+    const state2 = reducer(state, action2)
+    expect(state2).toEqual(initialState)
+  })
 })

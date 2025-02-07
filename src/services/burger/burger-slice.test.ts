@@ -1,4 +1,4 @@
-import { test, expect, vi } from 'vitest'
+import { test, expect, vi, describe } from 'vitest'
 
 import {
   reducer,
@@ -30,64 +30,66 @@ vi.mock('uuid', () => ({
   v4: () => 'mocked-uuid',
 }))
 
-test('should return the initial state', () => {
-  expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState)
-})
-
-test('should set the bun', () => {
-  const action = setBun(mockIngredient)
-  const state = reducer(initialState, action)
-  expect(state.bun).toEqual(mockIngredient)
-})
-
-test('should add an ingredient', () => {
-  const action = addIngredient(mockIngredient)
-  const state = reducer(initialState, action)
-
-  expect(state.ingredients).toHaveLength(1)
-  expect(state.ingredients[0]).toEqual({
-    ...mockIngredient,
-    key: 'mocked-uuid',
+describe('burger slice', () => {
+  test('should return the initial state', () => {
+    expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState)
   })
-})
 
-test('should remove an ingredient', () => {
-  const action = addIngredient(mockIngredient)
-  const state = reducer(initialState, action)
+  test('should set the bun', () => {
+    const action = setBun(mockIngredient)
+    const state = reducer(initialState, action)
+    expect(state.bun).toEqual(mockIngredient)
+  })
 
-  const action2 = removeIngredient({ index: 0 })
-  const state2 = reducer(state, action2)
+  test('should add an ingredient', () => {
+    const action = addIngredient(mockIngredient)
+    const state = reducer(initialState, action)
 
-  expect(state2.ingredients).toHaveLength(0)
-})
+    expect(state.ingredients).toHaveLength(1)
+    expect(state.ingredients[0]).toEqual({
+      ...mockIngredient,
+      key: 'mocked-uuid',
+    })
+  })
 
-test('should reorder an ingredient', () => {
-  const stateWithIngredients = {
-    ...initialState,
-    ingredients: [
-      { ...mockIngredient, key: 'key-1' },
-      { ...mockIngredient, key: 'key-2' },
-      { ...mockIngredient, key: 'key-3' },
-    ],
-  }
+  test('should remove an ingredient', () => {
+    const action = addIngredient(mockIngredient)
+    const state = reducer(initialState, action)
 
-  const action = reorderIngredient({ from: 0, to: 2 })
-  const state = reducer(stateWithIngredients, action)
+    const action2 = removeIngredient({ index: 0 })
+    const state2 = reducer(state, action2)
 
-  expect(state.ingredients).toHaveLength(3)
-  expect(state.ingredients.map((ing) => ing.key)).toEqual([
-    'key-2',
-    'key-3',
-    'key-1',
-  ])
-})
+    expect(state2.ingredients).toHaveLength(0)
+  })
 
-test('should clear all ingredients', () => {
-  const stateWithIngredients = {
-    bun: mockIngredient,
-    ingredients: [{ ...mockIngredient, key: 'mocked-uuid' }],
-  }
-  const state = reducer(stateWithIngredients, clearIngredients())
+  test('should reorder an ingredient', () => {
+    const stateWithIngredients = {
+      ...initialState,
+      ingredients: [
+        { ...mockIngredient, key: 'key-1' },
+        { ...mockIngredient, key: 'key-2' },
+        { ...mockIngredient, key: 'key-3' },
+      ],
+    }
 
-  expect(state).toEqual(initialState)
+    const action = reorderIngredient({ from: 0, to: 2 })
+    const state = reducer(stateWithIngredients, action)
+
+    expect(state.ingredients).toHaveLength(3)
+    expect(state.ingredients.map((ing) => ing.key)).toEqual([
+      'key-2',
+      'key-3',
+      'key-1',
+    ])
+  })
+
+  test('should clear all ingredients', () => {
+    const stateWithIngredients = {
+      bun: mockIngredient,
+      ingredients: [{ ...mockIngredient, key: 'mocked-uuid' }],
+    }
+    const state = reducer(stateWithIngredients, clearIngredients())
+
+    expect(state).toEqual(initialState)
+  })
 })
