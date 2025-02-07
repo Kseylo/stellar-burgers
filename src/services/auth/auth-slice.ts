@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { authApi } from '@/api'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
+import { authApi } from '@/api'
 
-interface AuthState {
+export interface AuthState {
   accessToken: string | null
   refreshToken: string | null
 }
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
 }
