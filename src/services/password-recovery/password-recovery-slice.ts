@@ -4,7 +4,7 @@ interface PasswordRecoveryState {
   isRecoveryInitiated: boolean
 }
 
-const initialState: PasswordRecoveryState = {
+export const initialState: PasswordRecoveryState = {
   isRecoveryInitiated: false,
 }
 
@@ -21,3 +21,4 @@ export const passwordRecoverySlice = createSlice({
 
 export const { setRecoveryInitiated, resetRecoveryState } =
   passwordRecoverySlice.actions
+export const { reducer } = passwordRecoverySlice
