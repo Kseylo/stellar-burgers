@@ -11,7 +11,13 @@ export const user: User = {
   name: 'John Doe',
 }
 
-export const credentials = {
+export const loginCredentials = {
+  email: 'user@example.com',
+  password: 'password',
+}
+
+export const registerCredentials = {
+  name: 'John Doe',
   email: 'user@example.com',
   password: 'password',
 }
