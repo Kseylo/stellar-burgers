@@ -24,7 +24,11 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
   ).length
 
   return (
-    <article ref={dragRef} className={styles.ingredient}>
+    <article
+      ref={dragRef}
+      className={styles.ingredient}
+      data-testid={'ingredient-card'}
+    >
       <img
         src={ingredient.image}
         alt={ingredient.name}

@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "test:unit": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "TEST_EMAIL=Kseylo@yandex.com TEST_PASSWORD=Kseylo playwright test",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -39,7 +39,11 @@ export function Modal(props: ModalProps) {
       >
         <header className={styles.header}>
           {title && <h2 className={'text text_type_main-large'}>{title}</h2>}
-          <button className={styles.iconButton} onClick={onClose}>
+          <button
+            className={styles.iconButton}
+            onClick={onClose}
+            data-testid={'close-modal'}
+          >
             <CloseIcon type={'primary'} />
           </button>
         </header>
