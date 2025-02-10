@@ -81,7 +81,11 @@ export function BurgerConstructor() {
   }
 
   return (
-    <section ref={dropRefIngredients} className={'mt-25 pl-4'}>
+    <section
+      ref={dropRefIngredients}
+      className={'mt-25 pl-4'}
+      data-testid={'burger-constructor'}
+    >
       <div className={'ml-8 pr-4'}>
         {bun ? (
           <ConstructorElement

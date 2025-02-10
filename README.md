@@ -20,6 +20,15 @@ npm run dev
 npm run build
 ```
 
+Запуск тестов
+
+```bash
+npm run test:unit
+npm run test:e2e
+```
+
+## Технологии
+
 Основные технологии
 - React
 - Redux Toolkit
@@ -28,3 +37,5 @@ npm run build
 - TypeScript
 - Vite
 - ESLint и Prettier
+- Vitest
+- Playwright

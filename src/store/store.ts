@@ -28,21 +28,27 @@ const rootReducer = combineReducers({
   [passwordApi.reducerPath]: passwordApi.reducer,
 })
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    })
-      .concat(errorLogger)
-      .concat(ingredientsApi.middleware)
-      .concat(ordersApi.middleware)
-      .concat(authApi.middleware)
-      .concat(passwordApi.middleware),
-})
+export const setupStore = (preloadedState?: Partial<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      })
+        .concat(errorLogger)
+        .concat(ingredientsApi.middleware)
+        .concat(ordersApi.middleware)
+        .concat(authApi.middleware)
+        .concat(passwordApi.middleware),
+    preloadedState,
+  })
+}
+
+export const store = setupStore()
 
 export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
 export type AppDispatch = typeof store.dispatch
 export const persistor = persistStore(store)
