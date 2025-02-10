@@ -18,6 +18,7 @@ async function addIngredients(
   if (bun) {
     const bunCard = page.getByTestId(SELECTORS.INGREDIENT_CARD).first()
     await bunCard.dragTo(page.getByTestId(SELECTORS.CONSTRUCTOR_AREA))
+    await page.waitForTimeout(300)
   }
 
   if (ingredient) {
@@ -26,6 +27,7 @@ async function addIngredients(
       .filter({ hasText: 'Соус' })
       .first()
     await ingredientCard.dragTo(page.getByTestId(SELECTORS.CONSTRUCTOR_AREA))
+    await page.waitForTimeout(300)
   }
 }
 
@@ -39,10 +41,10 @@ async function createOrder(page: Page) {
 async function login(page: Page) {
   await page.goto('/login')
   const emailInput = page.locator('input[name="email"]')
-  await emailInput.fill(process.env.TEST_EMAIL!)
+  await emailInput.fill(process.env.TEST_EMAIL || 'Kseylo@yandex.com')
 
   const passwordInput = page.locator('input[name="password"]')
-  await passwordInput.fill(process.env.TEST_PASSWORD!)
+  await passwordInput.fill(process.env.TEST_PASSWORD || 'Kseylo')
 
   const submitButton = page.getByRole('button', { name: 'Войти' })
   await submitButton.click()
